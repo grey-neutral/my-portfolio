@@ -1,4 +1,4 @@
-# MyPortfolio Website
+# My Portfolio Website
 
 This is a personal portfolio website showcasing coding projects, art projects, and writings on AI in healthcare. The website is built with HTML, CSS, and JavaScript, and is hosted on GitHub Pages.
 
