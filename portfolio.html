@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Portfolio - My Projects</title>
   <link rel="stylesheet" href="css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
   <header>
@@ -18,7 +18,7 @@
         <li><a href="about.html">About Me</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-      <button id="theme-toggle">Toggle Theme</button>
+      <!-- No theme toggle button -->
     </nav>
   </header>
   
@@ -36,11 +36,20 @@
           <h3><a href="projects/art-project.html">Art Project</a></h3>
           <p>Digital art pieces exploring the intersection of technology and creativity.</p>
         </div>
+        <!-- Anaesthesia Project Card (direct link to your Streamlit app) -->
         <div class="project-card">
-          <img src="images/writing.jpg" alt="Writing Sample" />
-          <h3><a href="projects/writing-sample.html">Writing Sample</a></h3>
-          <p>Insights and articles on AI in healthcare and its transformative impact.</p>
+          <span style="font-size: 4rem; display: block; text-align: center;">💉</span>
+          <h3><a href="https://anaesthesia.streamlit.app/" target="_blank">
+            Anaesthesia
+          </a></h3>
+          <p>
+            This Python application helps to identify the right type of Articaine-based anaesthesia (Ultracain) 
+            by evaluating contraindications based on patient medical conditions, and calculates the maximum
+            allowable dosage by body weight. <br><br>
+            <em>(For informational purposes only, not intended for medical use!)</em>
+          </p>
         </div>
+        <!-- If you'd prefer a separate detail page, link to `projects/anaesthesia.html` instead -->
       </div>
     </section>
   </main>
