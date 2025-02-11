@@ -1,14 +1,5 @@
-/* CSS Variables for Dark and Light themes */
+/* Light Theme Variables */
 :root {
-  --background-color: #121212;
-  --text-color: #f1f1f1;
-  --accent-color: #bb86fc;
-  --btn-bg: #bb86fc;
-  --btn-text: #121212;
-  --nav-bg: #1f1f1f;
-}
-
-body.light-mode {
   --background-color: #f1f1f1;
   --text-color: #121212;
   --accent-color: #6200ee;
@@ -24,10 +15,17 @@ body.light-mode {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif; /* Body text can use Roboto if desired */
   background-color: var(--background-color);
   color: var(--text-color);
   line-height: 1.6;
+}
+
+/* Apply Gallient font style to headings (assuming the font is available). */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Gallient", serif;
+  font-weight: 200;
+  font-style: normal;
 }
 
 /* Navigation */
@@ -45,6 +43,7 @@ nav {
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
+  color: var(--text-color);
 }
 
 .nav-links {
@@ -67,23 +66,7 @@ nav {
   color: var(--accent-color);
 }
 
-/* Toggle Button */
-#theme-toggle {
-  margin-left: 1.5rem;
-  padding: 0.5rem 1rem;
-  background-color: var(--btn-bg);
-  color: var(--btn-text);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#theme-toggle:hover {
-  background-color: var(--accent-color);
-}
-
-/* Home Page Hero */
+/* Hero Section */
 .hero {
   display: flex;
   flex-direction: column;
@@ -147,6 +130,7 @@ nav {
   overflow: hidden;
   transition: transform 0.3s ease;
   cursor: pointer;
+  padding-bottom: 1rem;
 }
 
 .project-card:hover {
@@ -165,6 +149,7 @@ nav {
 
 .project-card p {
   margin: 0 1rem 1rem;
+  color: var(--text-color);
 }
 
 /* Blog */
@@ -202,6 +187,7 @@ nav {
 .read-more {
   display: inline-block;
   margin-top: 1rem;
+  color: var(--accent-color);
 }
 
 /* About */
@@ -252,6 +238,10 @@ nav {
   top: 0;
 }
 
+.timeline-content {
+  margin-left: 1rem;
+}
+
 /* Contact */
 .contact {
   padding: 2rem;
@@ -279,10 +269,10 @@ nav {
 .contact-form-section textarea {
   padding: 0.7rem;
   margin-top: 0.5rem;
-  border: none;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  background-color: var(--nav-bg);
   color: var(--text-color);
+  background-color: #fff;
 }
 
 .contact-form-section textarea {
@@ -307,6 +297,7 @@ footer {
   padding: 1rem;
   background-color: var(--nav-bg);
   margin-top: 2rem;
+  color: var(--text-color);
 }
 
 /* Responsive */
