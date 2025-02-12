@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JANET – Portfolio & Research</title>
+    <title>Janet's Portfolio</title>
     <!--
       IMPORTANT FONT NOTES:
       • “Bosch Display” is used for all headings.
@@ -71,7 +71,7 @@
         position: fixed;
         top: 0;
         width: 100%;
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.8);
         z-index: 1000;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         padding: 10px 0;
@@ -86,8 +86,8 @@
       }
       /* Header left: name in all capitals */
       .logo {
-        font-size: 24px;
-        font-weight: bold;
+        font-size: 20px;
+        font-weight: semi-bold;
         letter-spacing: 2px;
       }
       .nav-links {
@@ -154,7 +154,6 @@
       }
       .tagline {
         font-size: 24px;
-        margin-bottom: 40px;
       }
       
       /* =================== Portfolio Carousel =================== */
@@ -179,9 +178,16 @@
         cursor: pointer;
         overflow: hidden;
         opacity: 0;
+        flex-shrink: 0;
+        transition: transform 0.3s;
+        text-align: left;
+        color: inherit;
       }
       .tile.animate-pan-left {
         /* Each tile will have its own animation delay applied via JS */
+      }
+      .tile:hover {
+        transform: scale(1.05);
       }
       .tile-emoji {
         font-size: 32px;
