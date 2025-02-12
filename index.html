@@ -244,8 +244,8 @@
         cursor: pointer;
         transition: background 0.3s;
       }
-      .collapsible-section:not(:last-child) {
-        margin-bottom: 10px;
+      .collapsible-section:last-child {
+        border-bottom: none;
       }
       .collapsible-header {
         display: flex;
@@ -273,6 +273,19 @@
       }
       .collapsible-section.open .collapsible-content {
         max-height: 300px; /* adjust as needed */
+      }
+      .writing-emoji {
+
+        flex: 1;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        font-size: 64px;
+
       }
       
       /* =================== Contact Section =================== */
