@@ -1,44 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Personal Website - Home</title>
-  <!-- If you have a custom or hosted version of the Gallient font, link to it here.
-       Otherwise, the browser will attempt to find a local Gallient font or fall back to serif. -->
-  <link rel="stylesheet" href="css/style.css" />
-  <!-- Roboto is optional for body text: -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
-</head>
-<body>
-  <header>
-    <nav>
-      <div class="logo">MyPortfolio</div>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
-        <li><a href="blog.html">Blog/Writing</a></li>
-        <li><a href="about.html">About Me</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <!-- No theme toggle button anymore -->
-    </nav>
-  </header>
-  
-  <main class="home">
-    <section class="hero">
-      <h1>Hi, I'm Janet</h1>
-      <p>Dentist| Tech and AI enthusiast</p>
-      <div class="hero-buttons">
-        <a href="portfolio.html" class="btn">View Portfolio</a>
-        <a href="blog.html" class="btn">Read My Blog</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Janet's Portfolio</title>
+    <!-- 
+      NOTE: To use the “Bosch Display” and “SF Pro Text” fonts, include the appropriate @font-face rules or external links.
+      For example, if you host them locally or use a web font service, add that here.
+    -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap" />
+    <style>
+      /* ========= Base Styles ========= */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-size: 16px;
+        line-height: 1.5;
+        font-weight: 300; /* light */
+        font-family: 'Trebuchet MS', sans-serif;
+        background-color: #fff;
+        color: #333;
+        overflow-x: hidden;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-bottom 0.3s;
+      }
+      a:hover {
+        border-bottom: 1px solid #C49E63; /* deep golden yellow-beige accent */
+      }
+      /* Headings: Use Bosch Display */
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Bosch Display', sans-serif;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .section-heading {
+        font-size: 48px;
+        font-weight: bold;
+        margin: 40px 0 20px;
+      }
+      /* Subheadings (32px) */
+      .subheading {
+        font-size: 32px;
+        font-family: 'Trebuchet MS', sans-serif;
+      }
+      /* Button text: SF Pro Text in 18px, semi-bold (adjust as needed) */
+      button,
+      .btn {
+        font-family: 'SF Pro Text', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      /* ========= Section Layout ========= */
+      .section {
+        min-height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+      }
+      /* Alternating backgrounds (except contact) */
+      .intro, .writing {
+        background-color: #fff;
+      }
+      .portfolio {
+        background-color: #f7f7f7;
+      }
+      /* Footer (Contact) */
+      .contact {
+        background-color: #333;
+        color: #fff;
+      }
+      /* ========= Navigation ========= */
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      nav {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+      }
+      .nav-links {
+        list-style: none;
+        display: flex;
+      }
+      .nav-links li {
+        margin: 0 15px;
+      }
+      /* ========= Intro / Hero Section ========= */
+      .intro .hero-content {
+        text-align: center;
+        opacity: 0;
+        animation: fadeIn 1s forwards;
+      }
+      .main-heading {
+        font-size: 72px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .tagline {
+        font-size: 24px;
+        font-family: 'Trebuchet MS', sans-serif;
+      }
+      /* ========= Portfolio (Carousel) ========= */
+      .carousel-container {
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 60px; /* space for nav arrows */
+      }
+      .carousel {
+        overflow: hidden;
+      }
+      .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+      .tile {
+        position: relative;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin: 10px;
+        padding: 20px;
+        width: calc((100% / 3.5) - 20px);
+        flex-shrink: 0;
+        transition: transform 0.3s;
+        text-align: left;
+        color: inherit;
+      }
+      .tile:hover {
+        transform: scale(1.05);
+      }
+      .tile-emoji {
+        font-size: 32px;
+        position: absolute;
+        top: 15px;
+        left: 15px;
+      }
+      .tile-title {
+        font-size: 24px;
+        margin-top: 40px;
+        margin-bottom: 10px;
+      }
+      .tile-description {
+        font-size: 16px;
+      }
+      .carousel-nav {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      }
+      .carousel-btn {
+        background-color: #555;
+        border: none;
+        border-radius: 50%;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        margin: 0 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .carousel-btn:hover {
+        background-color: #777;
+      }
+      /* ========= Writing Section ========= */
+      .writing-tile {
+        background-color: #f7f7f7;
+        border-radius: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 20px;
+        display: flex;
+        align-items: stretch;
+      }
+      .collapsible-container {
+        flex: 2;
+      }
+      .collapsible-section {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .collapsible-section:last-child {
+        border-bottom: none;
+      }
+      .collapsible-header {
+        display: flex;
+        align-items: center;
+      }
+      .collapsible-header .arrow {
+        margin-right: 10px;
+        transition: transform 0.3s;
+      }
+      .collapsible-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      .collapsible-section.open .collapsible-content {
+        max-height: 200px;
+      }
+      .writing-emoji {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 64px;
+      }
+      /* ========= Contact (Footer) ========= */
+      .contact-content {
+        text-align: center;
+      }
+      .social-links a {
+        margin: 0 10px;
+        font-size: 18px;
+        color: #C49E63;
+      }
+      /* ========= Animations ========= */
+      @keyframes fadeIn {
+        to { opacity: 1; }
+      }
+      /* ========= Parallax for Hero ========= */
+      .hero-content {
+        transform: translateY(0);
+      }
+      /* ========= Responsive ========= */
+      @media (max-width: 768px) {
+        .tile {
+          width: calc((100% / 1.5) - 20px);
+        }
+        .main-heading {
+          font-size: 48px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== Navigation ===== -->
+    <header>
+      <nav>
+        <div class="logo"><!-- Optionally add a logo text or image --></div>
+        <ul class="nav-links">
+          <li><a href="#intro">Home</a></li>
+          <li><a href="#portfolio">Projects</a></li>
+          <li><a href="#writing">Writing</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ===== Intro / Hero Section ===== -->
+    <section id="intro" class="section intro">
+      <div class="hero-content">
+        <h1 class="main-heading">Hi, I'm Janet</h1>
+        <p class="tagline">Dentist | AI in healthcare researcher | Tech and AI enthusiast</p>
       </div>
     </section>
-  </main>
 
-  <footer>
-    <p>&copy; 2025 MyPortfolio. All rights reserved.</p>
-  </footer>
-  <script src="js/main.js"></script>
-</body>
+    <!-- ===== Portfolio Section (Carousel) ===== -->
+    <section id="portfolio" class="section portfolio">
+      <h2 class="section-heading">Projects</h2>
+      <div class="carousel-container">
+        <div class="carousel">
+          <div class="carousel-track">
+            <!-- Tile 1: Anaesthesia -->
+            <a href="https://anaesthesia.streamlit.app/" target="_blank" class="tile">
+              <span class="tile-emoji">💉</span>
+              <h3 class="tile-title">Anaesthesia</h3>
+              <p class="tile-description">
+                This Python application helps to identify the right type of Articaine‑based anaesthesia (Ultracain) by evaluating contraindications based on patient medical conditions, and calculates the maximum allowable dosage by body weight.
+                <em>(For informational purposes only, not intended for medical use!)</em>
+              </p>
+            </a>
+            <!-- Tile 2: AI Research Article Parser -->
+            <a href="https://dentalaidigest.streamlit.app/" target="_blank" class="tile">
+              <span class="tile-emoji">🤖</span>
+              <h3 class="tile-title">AI Research Article Parser</h3>
+              <p class="tile-description">
+                Automates the retrieval, processing, and summarization of research abstracts related to AI in Dentistry. Contributed to this project.
+              </p>
+            </a>
+            <!-- Tile 3: Visual Travel Planner -->
+            <a href="https://todoo.streamlit.app/" target="_blank" class="tile">
+              <span class="tile-emoji">🗺️</span>
+              <h3 class="tile-title">Visual Travel Planner</h3>
+              <p class="tile-description">
+                [Add short description here]
+              </p>
+            </a>
+            <!-- Tile 4: Stealth project 1 -->
+            <a href="https://todoo.streamlit.app/" target="_blank" class="tile">
+              <span class="tile-emoji">🕵️‍♀️</span>
+              <h3 class="tile-title">Stealth project 1</h3>
+              <p class="tile-description">
+                You’ll have to click to experience this for yourself
+              </p>
+            </a>
+            <!-- Tile 5: Stealth project 2 -->
+            <a href="https://todoo.streamlit.app/" target="_blank" class="tile">
+              <span class="tile-emoji">🕵️‍♂️</span>
+              <h3 class="tile-title">Stealth project 2</h3>
+              <p class="tile-description">
+                You’ll have to click to experience this for yourself
+              </p>
+            </a>
+          </div>
+        </div>
+        <!-- Carousel navigation arrows -->
+        <div class="carousel-nav">
+          <button class="carousel-btn prev">&#10094;</button>
+          <button class="carousel-btn next">&#10095;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Writing Section (Collapsible Tile) ===== -->
+    <section id="writing" class="section writing">
+      <h2 class="section-heading">Research and Writing</h2>
+      <div class="writing-tile">
+        <div class="collapsible-container">
+          <!-- Publications -->
+          <div class="collapsible-section" data-index="0">
+            <div class="collapsible-header">
+              <span class="arrow">▼</span>
+              <span class="header-text">Publications on AI in healthcare</span>
+            </div>
+            <div class="collapsible-content">
+              <ul>
+                <li><a href="https://www.research.com/in/t" target="_blank">Data sharing for responsible artificial intelligence in dentistry: Safeguarding data privacy</a></li>
+                <li><a href="https://www.research.com/in/t" target="_blank">Diagnostic Test Accuracy of Artificial Intelligence in Detecting Obstructive Sleep Apnea: A Systematic Review</a></li>
+                <li><a href="https://www.research.com/in/t" target="_blank">Core Outcomes Measures in Dental Computer Vision Studies (DentalCOMS)</a></li>
+                <li><a href="https://www.research.com/in/t" target="_blank">Federated vs Local vs Central Deep Learning of Tooth Segmentation on Panoramic Radiographs</a></li>
+                <li><a href="https://www.research.com/in/t" target="_blank">Emulating Clinical Diagnostic Reasoning for Jaw Cysts with Machine Learning</a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- Presentations -->
+          <div class="collapsible-section" data-index="1">
+            <div class="collapsible-header">
+              <span class="arrow">▼</span>
+              <span class="header-text">Presentations</span>
+            </div>
+            <div class="collapsible-content">
+              <ul>
+                <li><strong>The Impact of AI on Healthcare Policy and Regulation</strong>, Brinz (Nov 2023) – Poster presentation at the Global Symposium on Artificial Intelligence in Dentistry at the Harvard School of Dental Medicine, Cambridge, MA</li>
+                <li><strong>Microbial and Sialochemical Saliva Shifts with Tumor Irradiation</strong>, Sep 2023 – Oral presentation at the CED-IADR Conference, Rhodes, Greece</li>
+                <li><strong>AI in Dentistry - A Brief Market Overview</strong>, Mar 2023 – Oral presentation at the 2nd ITU-WHO TG-Dental Symposium, MIT, Boston, MA</li>
+              </ul>
+            </div>
+          </div>
+          <!-- Blog Posts -->
+          <div class="collapsible-section" data-index="2">
+            <div class="collapsible-header">
+              <span class="arrow">▼</span>
+              <span class="header-text">Blog posts on AI</span>
+            </div>
+            <div class="collapsible-content">
+              <ul>
+                <li><a href="https://www.research.com/in/t" target="_blank">The AI Doctor Will See You Now: Navigating the Path to AGI in Healthcare</a></li>
+                <li><a href="https://www.lesswrong.com/posts/kduqRKTfJHQGKDdFC/ambiguities-or-the-issues-we-face-with-ai-in-medicine" target="_blank">Ambiguities or the issues we face with AI in medicine</a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- Book -->
+          <div class="collapsible-section" data-index="3">
+            <div class="collapsible-header">
+              <span class="arrow">▼</span>
+              <span class="header-text">Book</span>
+            </div>
+            <div class="collapsible-content">
+              <ul>
+                <li><a href="https://www.amazon.de/gp/product/B0BM3P3WFZ/ref=ewc_pr_img_1?smid=A3JWKAKR8XB7XF&psc=1" target="_blank">Baking book I’ve written with various recipes for cakes, biscuits, muffins and more (in German)</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Right-side Emoji Display -->
+        <div class="writing-emoji">
+          <span id="writing-emoji-display">📄</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Contact / Footer Section ===== -->
+    <footer id="contact" class="section contact">
+      <div class="contact-content">
+        <h2 class="section-heading">Contact</h2>
+        <p>Connect with me on social media:</p>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/dr-janet-brinz/" target="_blank">LinkedIn</a>
+          <a href="https://github.com/grey-neutral" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ========= JavaScript ========= -->
+    <script>
+      // Smooth scrolling for in‑page anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      // Carousel functionality
+      const track = document.querySelector('.carousel-track');
+      const prevButton = document.querySelector('.carousel-btn.prev');
+      const nextButton = document.querySelector('.carousel-btn.next');
+      const tile = document.querySelector('.tile');
+      const tileWidth = tile ? tile.offsetWidth + 20 : 300; // fallback
+      let currentPosition = 0;
+      nextButton.addEventListener('click', () => {
+        const maxPosition = track.scrollWidth - track.offsetWidth;
+        currentPosition = Math.min(currentPosition + tileWidth, maxPosition);
+        track.scrollTo({ left: currentPosition, behavior: 'smooth' });
+      });
+      prevButton.addEventListener('click', () => {
+        currentPosition = Math.max(currentPosition - tileWidth, 0);
+        track.scrollTo({ left: currentPosition, behavior: 'smooth' });
+      });
+
+      // Collapsible sections (only one open at a time)
+      const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
+      let openSection = null;
+      collapsibleHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+          const section = header.parentElement;
+          if (openSection && openSection !== section) {
+            openSection.classList.remove('open');
+            openSection.querySelector('.arrow').textContent = '▼';
+          }
+          if (section.classList.contains('open')) {
+            section.classList.remove('open');
+            header.querySelector('.arrow').textContent = '▼';
+          } else {
+            section.classList.add('open');
+            header.querySelector('.arrow').textContent = '▲';
+            openSection = section;
+          }
+          // Close all others
+          document.querySelectorAll('.collapsible-section').forEach(sec => {
+            if (sec !== section) {
+              sec.classList.remove('open');
+              sec.querySelector('.arrow').textContent = '▼';
+            }
+          });
+        });
+      });
+
+      // Change writing emoji based on which collapsible section is clicked
+      const writingEmojiDisplay = document.getElementById('writing-emoji-display');
+      const emojiMap = {
+        0: '📄',
+        1: '💬',
+        2: '💻',
+        3: '🧁'
+      };
+      document.querySelectorAll('.collapsible-section').forEach((section, index) => {
+        section.addEventListener('click', () => {
+          writingEmojiDisplay.textContent = emojiMap[index];
+        });
+      });
+
+      // Parallax effect on hero content
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallax = document.querySelector('.hero-content');
+        if (parallax) {
+          parallax.style.transform = 'translateY(' + scrolled * 0.3 + 'px)';
+        }
+      });
+
+      // Fade‑in animation on page load (for hero)
+      window.addEventListener('load', () => {
+        document.body.classList.add('loaded');
+      });
+    </script>
+  </body>
 </html>
