@@ -3,14 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Janet's Portfolio</title>
-    <!-- 
-      NOTE: To use the “Bosch Display” and “SF Pro Text” fonts, include the appropriate @font-face rules or external links.
-      For example, if you host them locally or use a web font service, add that here.
+    <title>JANET – Portfolio & Research</title>
+    <!--
+      IMPORTANT FONT NOTES:
+      • “Bosch Display” is used for all headings.
+      • “SF Pro Text” is used for button text.
+      • “Trebuchet MS” (or a similar minimalist font) is used for subheadings and body text.
+      Ensure that you load or host these fonts as needed.
     -->
+    <!-- Example: Load Trebuchet (Google Fonts does not have Bosch Display or SF Pro Text) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap" />
     <style>
-      /* ========= Base Styles ========= */
+      /* =================== Base =================== */
       * {
         box-sizing: border-box;
         margin: 0;
@@ -35,60 +39,42 @@
         transition: border-bottom 0.3s;
       }
       a:hover {
-        border-bottom: 1px solid #C49E63; /* deep golden yellow-beige accent */
+        border-bottom: 1px solid #C49E63; /* deep golden yellow-beige */
       }
-      /* Headings: Use Bosch Display */
+      /* =================== Typography =================== */
+      /* Headings: Bosch Display (assumed available) */
       h1, h2, h3, h4, h5, h6 {
         font-family: 'Bosch Display', sans-serif;
         text-align: center;
         margin-bottom: 20px;
       }
       .section-heading {
-        font-size: 48px;
+        font-size: 48px; /* same as project titles */
         font-weight: bold;
         margin: 40px 0 20px;
       }
-      /* Subheadings (32px) */
+      /* Subheadings: 32px, using Trebuchet MS as a stand-in for SF Pro Text */
       .subheading {
         font-size: 32px;
         font-family: 'Trebuchet MS', sans-serif;
       }
-      /* Button text: SF Pro Text in 18px, semi-bold (adjust as needed) */
+      /* Button Text: SF Pro Text in 18px (semi-bold) */
       button,
       .btn {
         font-family: 'SF Pro Text', sans-serif;
         font-size: 18px;
         font-weight: 600;
       }
-      /* ========= Section Layout ========= */
-      .section {
-        min-height: 100vh;
-        padding: 40px 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        position: relative;
-      }
-      /* Alternating backgrounds (except contact) */
-      .intro, .writing {
-        background-color: #fff;
-      }
-      .portfolio {
-        background-color: #f7f7f7;
-      }
-      /* Footer (Contact) */
-      .contact {
-        background-color: #333;
-        color: #fff;
-      }
-      /* ========= Navigation ========= */
+      
+      /* =================== Layout & Sections =================== */
       header {
         position: fixed;
         top: 0;
         width: 100%;
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.95);
         z-index: 1000;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 10px 0;
       }
       nav {
         width: 90%;
@@ -97,7 +83,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 0;
+      }
+      /* Header left: name in all capitals */
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 2px;
       }
       .nav-links {
         list-style: none;
@@ -106,11 +97,55 @@
       .nav-links li {
         margin: 0 15px;
       }
-      /* ========= Intro / Hero Section ========= */
+      
+      /* Each section (except contact) fills the full viewport height */
+      .section {
+        min-height: 100vh;
+        padding: 80px 20px 40px; /* top padding to account for fixed header */
+        position: relative;
+        opacity: 0;
+      }
+      /* Alternate backgrounds: white and light grey */
+      .intro, .writing { background-color: #fff; }
+      .portfolio { background-color: #f7f7f7; }
+      /* Contact section: one-third of viewport height */
+      .contact {
+        min-height: 33vh;
+        background-color: #333;
+        color: #fff;
+        padding: 40px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+      }
+      
+      /* =================== Animations =================== */
+      @keyframes slideFromTop {
+        from { transform: translateY(-50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      @keyframes slideFromBottom {
+        from { transform: translateY(50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes panInLeft {
+        from { transform: translateX(-50px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      /* Utility classes for animations */
+      .animate-slide-top { animation: slideFromTop 1.5s forwards; }
+      .animate-slide-bottom { animation: slideFromBottom 1.5s forwards; }
+      .animate-fade { animation: fadeIn 1.5s forwards; }
+      .animate-pan-left { animation: panInLeft 1s forwards; }
+      
+      /* =================== Intro Section =================== */
       .intro .hero-content {
         text-align: center;
-        opacity: 0;
-        animation: fadeIn 1s forwards;
       }
       .main-heading {
         font-size: 72px;
@@ -119,16 +154,15 @@
       }
       .tagline {
         font-size: 24px;
-        font-family: 'Trebuchet MS', sans-serif;
+        margin-bottom: 40px;
       }
-      /* ========= Portfolio (Carousel) ========= */
+      
+      /* =================== Portfolio Carousel =================== */
       .carousel-container {
         position: relative;
         overflow: hidden;
-        padding-bottom: 60px; /* space for nav arrows */
-      }
-      .carousel {
-        overflow: hidden;
+        margin: 0 auto;
+        max-width: 1200px;
       }
       .carousel-track {
         display: flex;
@@ -141,14 +175,13 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         margin: 10px;
         padding: 20px;
-        width: calc((100% / 3.5) - 20px);
-        flex-shrink: 0;
-        transition: transform 0.3s;
-        text-align: left;
-        color: inherit;
+        flex: 0 0 calc((100% / 3.5) - 20px); /* 3.5 tiles visible */
+        cursor: pointer;
+        overflow: hidden;
+        opacity: 0;
       }
-      .tile:hover {
-        transform: scale(1.05);
+      .tile.animate-pan-left {
+        /* Each tile will have its own animation delay applied via JS */
       }
       .tile-emoji {
         font-size: 32px;
@@ -157,17 +190,20 @@
         left: 15px;
       }
       .tile-title {
-        font-size: 24px;
-        margin-top: 40px;
+        font-size: 24px; /* same as collapsible headers */
+        margin-top: 50px; /* leave space for emoji */
         margin-bottom: 10px;
       }
       .tile-description {
         font-size: 16px;
       }
+      /* Carousel Navigation (dark grey round buttons) */
       .carousel-nav {
         position: absolute;
         bottom: 20px;
         right: 20px;
+        display: flex;
+        gap: 10px;
       }
       .carousel-btn {
         background-color: #555;
@@ -176,14 +212,14 @@
         color: #fff;
         width: 40px;
         height: 40px;
-        margin: 0 5px;
         cursor: pointer;
         transition: background-color 0.3s;
       }
       .carousel-btn:hover {
         background-color: #777;
       }
-      /* ========= Writing Section ========= */
+      
+      /* =================== Writing Section (Collapsible) =================== */
       .writing-tile {
         background-color: #f7f7f7;
         border-radius: 15px;
@@ -191,6 +227,7 @@
         padding: 20px;
         display: flex;
         align-items: stretch;
+        opacity: 0;
       }
       .collapsible-container {
         flex: 2;
@@ -201,15 +238,26 @@
         cursor: pointer;
         transition: background 0.3s;
       }
-      .collapsible-section:last-child {
-        border-bottom: none;
+      .collapsible-section:not(:last-child) {
+        margin-bottom: 10px;
       }
       .collapsible-header {
         display: flex;
         align-items: center;
+        font-size: 24px; /* same as project titles */
       }
-      .collapsible-header .arrow {
+      /* Arrow button styled as a circle with an arrow */
+      .arrow-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #555;
+        color: #fff;
         margin-right: 10px;
+        flex-shrink: 0;
         transition: transform 0.3s;
       }
       .collapsible-content {
@@ -218,48 +266,40 @@
         transition: max-height 0.3s ease;
       }
       .collapsible-section.open .collapsible-content {
-        max-height: 200px;
+        max-height: 300px; /* adjust as needed */
       }
-      .writing-emoji {
-        flex: 1;
+      
+      /* =================== Contact Section =================== */
+      .contact-inner {
         display: flex;
-        justify-content: center;
         align-items: center;
-        font-size: 64px;
+        justify-content: center;
+        gap: 20px;
+        opacity: 0;
       }
-      /* ========= Contact (Footer) ========= */
-      .contact-content {
-        text-align: center;
+      .contact-img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
       }
-      .social-links a {
-        margin: 0 10px;
+      .contact-links {
         font-size: 18px;
+      }
+      .contact-links a {
+        margin: 0 10px;
         color: #C49E63;
       }
-      /* ========= Animations ========= */
-      @keyframes fadeIn {
-        to { opacity: 1; }
-      }
-      /* ========= Parallax for Hero ========= */
-      .hero-content {
-        transform: translateY(0);
-      }
-      /* ========= Responsive ========= */
-      @media (max-width: 768px) {
-        .tile {
-          width: calc((100% / 1.5) - 20px);
-        }
-        .main-heading {
-          font-size: 48px;
-        }
-      }
+      
+      /* =================== Fade-In on Scroll =================== */
+      .visible { opacity: 1; transition: opacity 1s ease-in; }
     </style>
   </head>
   <body>
-    <!-- ===== Navigation ===== -->
-    <header>
+    <!-- ===== Header / Navigation ===== -->
+    <header class="animate-slide-top">
       <nav>
-        <div class="logo"><!-- Optionally add a logo text or image --></div>
+        <div class="logo">JANET</div>
         <ul class="nav-links">
           <li><a href="#intro">Home</a></li>
           <li><a href="#portfolio">Projects</a></li>
@@ -269,64 +309,57 @@
       </nav>
     </header>
 
-    <!-- ===== Intro / Hero Section ===== -->
+    <!-- ===== Intro Section ===== -->
     <section id="intro" class="section intro">
-      <div class="hero-content">
+      <div class="hero-content animate-slide-bottom">
         <h1 class="main-heading">Hi, I'm Janet</h1>
         <p class="tagline">Dentist | AI in healthcare researcher | Tech and AI enthusiast</p>
       </div>
     </section>
 
-    <!-- ===== Portfolio Section (Carousel) ===== -->
+    <!-- ===== Projects Section (Carousel) ===== -->
     <section id="portfolio" class="section portfolio">
-      <h2 class="section-heading">Projects</h2>
+      <h2 class="section-heading visible">Projects</h2>
       <div class="carousel-container">
-        <div class="carousel">
-          <div class="carousel-track">
-            <!-- Tile 1: Anaesthesia -->
-            <a href="https://anaesthesia.streamlit.app/" target="_blank" class="tile">
-              <span class="tile-emoji">💉</span>
-              <h3 class="tile-title">Anaesthesia</h3>
-              <p class="tile-description">
-                This Python application helps to identify the right type of Articaine‑based anaesthesia (Ultracain) by evaluating contraindications based on patient medical conditions, and calculates the maximum allowable dosage by body weight.
-                <em>(For informational purposes only, not intended for medical use!)</em>
-              </p>
-            </a>
-            <!-- Tile 2: AI Research Article Parser -->
-            <a href="https://dentalaidigest.streamlit.app/" target="_blank" class="tile">
-              <span class="tile-emoji">🤖</span>
-              <h3 class="tile-title">AI Research Article Parser</h3>
-              <p class="tile-description">
-                Automates the retrieval, processing, and summarization of research abstracts related to AI in Dentistry. Contributed to this project.
-              </p>
-            </a>
-            <!-- Tile 3: Visual Travel Planner -->
-            <a href="https://todoo.streamlit.app/" target="_blank" class="tile">
-              <span class="tile-emoji">🗺️</span>
-              <h3 class="tile-title">Visual Travel Planner</h3>
-              <p class="tile-description">
-                [Add short description here]
-              </p>
-            </a>
-            <!-- Tile 4: Stealth project 1 -->
-            <a href="https://todoo.streamlit.app/" target="_blank" class="tile">
-              <span class="tile-emoji">🕵️‍♀️</span>
-              <h3 class="tile-title">Stealth project 1</h3>
-              <p class="tile-description">
-                You’ll have to click to experience this for yourself
-              </p>
-            </a>
-            <!-- Tile 5: Stealth project 2 -->
-            <a href="https://todoo.streamlit.app/" target="_blank" class="tile">
-              <span class="tile-emoji">🕵️‍♂️</span>
-              <h3 class="tile-title">Stealth project 2</h3>
-              <p class="tile-description">
-                You’ll have to click to experience this for yourself
-              </p>
-            </a>
-          </div>
+        <div class="carousel-track">
+          <!-- Project Tile 1: Anaesthesia -->
+          <a href="https://anaesthesia.streamlit.app/" target="_blank" class="tile">
+            <span class="tile-emoji">💉</span>
+            <h3 class="tile-title">Anaesthesia</h3>
+            <p class="tile-description">
+              This Python application helps to identify the right type of Articaine‑based anaesthesia (Ultracain)
+              by evaluating contraindications and calculating the maximum dosage by body weight.
+              <em>(For informational purposes only)</em>
+            </p>
+          </a>
+          <!-- Project Tile 2: AI Research Article Parser -->
+          <a href="https://dentalaidigest.streamlit.app/" target="_blank" class="tile">
+            <span class="tile-emoji">🤖</span>
+            <h3 class="tile-title">AI Research Article Parser</h3>
+            <p class="tile-description">
+              Automates retrieval and summarization of research abstracts in AI for dentistry.
+            </p>
+          </a>
+          <!-- Project Tile 3: Visual Travel Planner -->
+          <a href="https://todoo.streamlit.app/" target="_blank" class="tile">
+            <span class="tile-emoji">🗺️</span>
+            <h3 class="tile-title">Visual Travel Planner</h3>
+            <p class="tile-description">[Add short description here]</p>
+          </a>
+          <!-- Project Tile 4: Stealth project 1 -->
+          <a href="https://todoo.streamlit.app/" target="_blank" class="tile">
+            <span class="tile-emoji">🕵️‍♀️</span>
+            <h3 class="tile-title">Stealth project 1</h3>
+            <p class="tile-description">You’ll have to click to experience this for yourself</p>
+          </a>
+          <!-- Project Tile 5: Stealth project 2 -->
+          <a href="https://todoo.streamlit.app/" target="_blank" class="tile">
+            <span class="tile-emoji">🕵️‍♂️</span>
+            <h3 class="tile-title">Stealth project 2</h3>
+            <p class="tile-description">You’ll have to click to experience this for yourself</p>
+          </a>
         </div>
-        <!-- Carousel navigation arrows -->
+        <!-- Carousel Navigation -->
         <div class="carousel-nav">
           <button class="carousel-btn prev">&#10094;</button>
           <button class="carousel-btn next">&#10095;</button>
@@ -334,45 +367,45 @@
       </div>
     </section>
 
-    <!-- ===== Writing Section (Collapsible Tile) ===== -->
+    <!-- ===== Writing Section (Collapsible) ===== -->
     <section id="writing" class="section writing">
-      <h2 class="section-heading">Research and Writing</h2>
+      <h2 class="section-heading visible">Research and Writing</h2>
       <div class="writing-tile">
         <div class="collapsible-container">
-          <!-- Publications -->
-          <div class="collapsible-section" data-index="0">
+          <!-- Collapsible Section 1: Publications (OPEN by default) -->
+          <div class="collapsible-section open" data-index="0">
             <div class="collapsible-header">
-              <span class="arrow">▼</span>
+              <button class="arrow-btn">▲</button>
               <span class="header-text">Publications on AI in healthcare</span>
             </div>
-            <div class="collapsible-content">
+            <div class="collapsible-content" style="max-height: 300px;">
               <ul>
                 <li><a href="https://www.research.com/in/t" target="_blank">Data sharing for responsible artificial intelligence in dentistry: Safeguarding data privacy</a></li>
-                <li><a href="https://www.research.com/in/t" target="_blank">Diagnostic Test Accuracy of Artificial Intelligence in Detecting Obstructive Sleep Apnea: A Systematic Review</a></li>
+                <li><a href="https://www.research.com/in/t" target="_blank">Diagnostic Test Accuracy of AI in Detecting Obstructive Sleep Apnea: A Systematic Review</a></li>
                 <li><a href="https://www.research.com/in/t" target="_blank">Core Outcomes Measures in Dental Computer Vision Studies (DentalCOMS)</a></li>
                 <li><a href="https://www.research.com/in/t" target="_blank">Federated vs Local vs Central Deep Learning of Tooth Segmentation on Panoramic Radiographs</a></li>
                 <li><a href="https://www.research.com/in/t" target="_blank">Emulating Clinical Diagnostic Reasoning for Jaw Cysts with Machine Learning</a></li>
               </ul>
             </div>
           </div>
-          <!-- Presentations -->
+          <!-- Collapsible Section 2: Presentations -->
           <div class="collapsible-section" data-index="1">
             <div class="collapsible-header">
-              <span class="arrow">▼</span>
+              <button class="arrow-btn">▼</button>
               <span class="header-text">Presentations</span>
             </div>
             <div class="collapsible-content">
               <ul>
-                <li><strong>The Impact of AI on Healthcare Policy and Regulation</strong>, Brinz (Nov 2023) – Poster presentation at the Global Symposium on Artificial Intelligence in Dentistry at the Harvard School of Dental Medicine, Cambridge, MA</li>
-                <li><strong>Microbial and Sialochemical Saliva Shifts with Tumor Irradiation</strong>, Sep 2023 – Oral presentation at the CED-IADR Conference, Rhodes, Greece</li>
-                <li><strong>AI in Dentistry - A Brief Market Overview</strong>, Mar 2023 – Oral presentation at the 2nd ITU-WHO TG-Dental Symposium, MIT, Boston, MA</li>
+                <li><strong>The Impact of AI on Healthcare Policy and Regulation</strong>, Brinz (Nov 2023) – Poster at Harvard School of Dental Medicine</li>
+                <li><strong>Microbial and Sialochemical Saliva Shifts with Tumor Irradiation</strong>, Sep 2023 – Oral presentation at CED-IADR Conference</li>
+                <li><strong>AI in Dentistry - A Brief Market Overview</strong>, Mar 2023 – Oral presentation at ITU-WHO TG-Dental Symposium</li>
               </ul>
             </div>
           </div>
-          <!-- Blog Posts -->
+          <!-- Collapsible Section 3: Blog Posts -->
           <div class="collapsible-section" data-index="2">
             <div class="collapsible-header">
-              <span class="arrow">▼</span>
+              <button class="arrow-btn">▼</button>
               <span class="header-text">Blog posts on AI</span>
             </div>
             <div class="collapsible-content">
@@ -382,94 +415,115 @@
               </ul>
             </div>
           </div>
-          <!-- Book -->
+          <!-- Collapsible Section 4: Book -->
           <div class="collapsible-section" data-index="3">
             <div class="collapsible-header">
-              <span class="arrow">▼</span>
+              <button class="arrow-btn">▼</button>
               <span class="header-text">Book</span>
             </div>
             <div class="collapsible-content">
               <ul>
-                <li><a href="https://www.amazon.de/gp/product/B0BM3P3WFZ/ref=ewc_pr_img_1?smid=A3JWKAKR8XB7XF&psc=1" target="_blank">Baking book I’ve written with various recipes for cakes, biscuits, muffins and more (in German)</a></li>
+                <li><a href="https://www.amazon.de/gp/product/B0BM3P3WFZ/ref=ewc_pr_img_1?smid=A3JWKAKR8XB7XF&psc=1" target="_blank">Baking book in German – Cakes, biscuits, muffins and more</a></li>
               </ul>
             </div>
           </div>
         </div>
         <!-- Right-side Emoji Display -->
-        <div class="writing-emoji">
+        <div class="writing-emoji" style="flex:1; display:flex; align-items:center; justify-content:center; font-size:64px; opacity:0;">
           <span id="writing-emoji-display">📄</span>
         </div>
       </div>
     </section>
 
-    <!-- ===== Contact / Footer Section ===== -->
+    <!-- ===== Contact Section ===== -->
     <footer id="contact" class="section contact">
-      <div class="contact-content">
-        <h2 class="section-heading">Contact</h2>
-        <p>Connect with me on social media:</p>
-        <div class="social-links">
+      <div class="contact-inner">
+        <img src="your-photo.jpg" alt="Your Photo" class="contact-img" />
+        <div class="contact-links">
+          <h2 style="font-size:32px; margin-bottom:10px;">Contact</h2>
+          <p>Connect with me:</p>
           <a href="https://www.linkedin.com/in/dr-janet-brinz/" target="_blank">LinkedIn</a>
           <a href="https://github.com/grey-neutral" target="_blank">GitHub</a>
         </div>
       </div>
     </footer>
 
-    <!-- ========= JavaScript ========= -->
+    <!-- =================== JavaScript =================== -->
     <script>
-      // Smooth scrolling for in‑page anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-        });
-      });
-
-      // Carousel functionality
-      const track = document.querySelector('.carousel-track');
-      const prevButton = document.querySelector('.carousel-btn.prev');
-      const nextButton = document.querySelector('.carousel-btn.next');
-      const tile = document.querySelector('.tile');
-      const tileWidth = tile ? tile.offsetWidth + 20 : 300; // fallback
-      let currentPosition = 0;
-      nextButton.addEventListener('click', () => {
-        const maxPosition = track.scrollWidth - track.offsetWidth;
-        currentPosition = Math.min(currentPosition + tileWidth, maxPosition);
-        track.scrollTo({ left: currentPosition, behavior: 'smooth' });
-      });
-      prevButton.addEventListener('click', () => {
-        currentPosition = Math.max(currentPosition - tileWidth, 0);
-        track.scrollTo({ left: currentPosition, behavior: 'smooth' });
-      });
-
-      // Collapsible sections (only one open at a time)
-      const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
-      let openSection = null;
-      collapsibleHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-          const section = header.parentElement;
-          if (openSection && openSection !== section) {
-            openSection.classList.remove('open');
-            openSection.querySelector('.arrow').textContent = '▼';
+      /* ---------- Section Fade-In on Scroll ---------- */
+      const sections = document.querySelectorAll('.section, .writing-tile, .contact-inner, .tile');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Remove observer if desired to animate only once:
+            observer.unobserve(entry.target);
           }
-          if (section.classList.contains('open')) {
-            section.classList.remove('open');
-            header.querySelector('.arrow').textContent = '▼';
-          } else {
+        });
+      }, { threshold: 0.2 });
+      sections.forEach(sec => observer.observe(sec));
+
+      /* ---------- Carousel Functionality ---------- */
+      const track = document.querySelector('.carousel-track');
+      const tiles = document.querySelectorAll('.tile');
+      const prevBtn = document.querySelector('.carousel-btn.prev');
+      const nextBtn = document.querySelector('.carousel-btn.next');
+      let currentIndex = 0;
+      const totalTiles = tiles.length;
+      // Calculate tile width (assume all are equal)
+      function updateTileWidth() {
+        return tiles[0].getBoundingClientRect().width + 20; // including margin
+      }
+      function moveCarousel() {
+        const tileWidth = updateTileWidth();
+        track.style.transform = `translateX(-${currentIndex * tileWidth}px)`;
+      }
+      nextBtn.addEventListener('click', () => {
+        // Allow sliding until the last tile is in view (if possible)
+        const maxIndex = totalTiles - 3; // 3 full tiles visible (approx.)
+        if (currentIndex < maxIndex) {
+          currentIndex++;
+          moveCarousel();
+        }
+      });
+      prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+          moveCarousel();
+        }
+      });
+
+      /* ---------- Sequential Animation for Project Tiles ---------- */
+      tiles.forEach((tile, index) => {
+        tile.style.animation = `panInLeft 0.8s forwards`;
+        tile.style.animationDelay = `${index * 0.2}s`;
+      });
+
+      /* ---------- Collapsible Sections (Mutually Exclusive) ---------- */
+      const collapsibleSections = document.querySelectorAll('.collapsible-section');
+      // Ensure first section (Publications) is open by default.
+      let openSection = document.querySelector('.collapsible-section.open');
+      if (!openSection) {
+        collapsibleSections[0].classList.add('open');
+        openSection = collapsibleSections[0];
+        openSection.querySelector('.arrow-btn').textContent = '▲';
+      }
+      collapsibleSections.forEach(section => {
+        section.querySelector('.collapsible-header').addEventListener('click', () => {
+          if (section !== openSection) {
+            // Close the currently open section
+            openSection.classList.remove('open');
+            openSection.querySelector('.arrow-btn').textContent = '▼';
+            // Open the clicked section
             section.classList.add('open');
-            header.querySelector('.arrow').textContent = '▲';
+            section.querySelector('.arrow-btn').textContent = '▲';
             openSection = section;
           }
-          // Close all others
-          document.querySelectorAll('.collapsible-section').forEach(sec => {
-            if (sec !== section) {
-              sec.classList.remove('open');
-              sec.querySelector('.arrow').textContent = '▼';
-            }
-          });
+          // If the open section is clicked, do nothing to ensure one remains open.
         });
       });
 
-      // Change writing emoji based on which collapsible section is clicked
+      /* ---------- Change Writing Emoji Based on Section Clicked ---------- */
       const writingEmojiDisplay = document.getElementById('writing-emoji-display');
       const emojiMap = {
         0: '📄',
@@ -477,25 +531,25 @@
         2: '💻',
         3: '🧁'
       };
-      document.querySelectorAll('.collapsible-section').forEach((section, index) => {
+      collapsibleSections.forEach((section, idx) => {
         section.addEventListener('click', () => {
-          writingEmojiDisplay.textContent = emojiMap[index];
+          writingEmojiDisplay.textContent = emojiMap[idx];
         });
       });
 
-      // Parallax effect on hero content
-      window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const parallax = document.querySelector('.hero-content');
-        if (parallax) {
-          parallax.style.transform = 'translateY(' + scrolled * 0.3 + 'px)';
-        }
+      /* ---------- Sequential Animation for Collapsible Headers ---------- */
+      const headers = document.querySelectorAll('.collapsible-header');
+      headers.forEach((header, idx) => {
+        header.style.animation = `panInLeft 0.8s forwards`;
+        header.style.animationDelay = `${idx * 0.2}s`;
       });
 
-      // Fade‑in animation on page load (for hero)
-      window.addEventListener('load', () => {
-        document.body.classList.add('loaded');
-      });
+      /* ---------- Additional Panning Effects for Contact Section ---------- */
+      const contactInner = document.querySelector('.contact-inner');
+      contactInner.style.animation = 'slideFromBottom 1s forwards';
+
+      /* ---------- Optional: Re-trigger animations on scroll (if desired) ---------- */
+      // (You can add additional IntersectionObserver code here if you want repeated animations.)
     </script>
   </body>
 </html>
