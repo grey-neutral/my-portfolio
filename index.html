@@ -458,9 +458,10 @@
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
             observer.unobserve(entry.target);
+            entry.target.style.opacity = 1;
           }
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.3 });
       sections.forEach(sec => observer.observe(sec));
       
       /* --------- Carousel Functionality --------- */
