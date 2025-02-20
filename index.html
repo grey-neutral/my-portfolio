@@ -7,9 +7,7 @@
     <!-- 
       FONT NOTES:
       • Headings use “Bosch Display”
-      • Button text uses “SF Pro Text”
-      • Subheadings & body text use a minimalist font (Trebuchet MS is used here as a stand‑in)
-      Ensure these fonts are loaded/hosted as needed.
+      • Subheadings & body, Button  text use a minimalist font (Trebuchet MS)
     -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap" />
     <style>
@@ -41,6 +39,14 @@
         border-bottom: 1px solid #C49E63; /* deep golden yellow-beige accent */
       }
       /* =============== Typography =============== */
+
+      @font-face {
+        font-family: 'Bosch Display';
+        src: url('fonts/bosch.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
       /* Headings – Bosch Display (assumed available) */
       h1, h2, h3, h4, h5, h6 {
         font-family: 'Bosch Display', sans-serif;
@@ -57,10 +63,10 @@
         font-size: 32px;
         font-family: 'Trebuchet MS', sans-serif;
       }
-      /* Button text: SF Pro Text in 18px (semi-bold) */
+      /* Button text: Trebuchet MS in 18px (semi-bold) */
       button,
       .btn {
-        font-family: 'SF Pro Text', sans-serif;
+        font-family: 'Trebuchet MS', sans-serif;
         font-size: 18px;
         font-weight: 600;
       }
