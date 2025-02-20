@@ -190,7 +190,8 @@
         opacity: 0;
       }
       .tile:hover {
-        transform: scale(1.10);
+        transform: translateY(-5px); /* Use translateY instead of scale */
+        transition: transform 0.3s; /* Smooth transition */
       }
       .tile-emoji {
         font-size: 32px;
