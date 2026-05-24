@@ -13,6 +13,7 @@
     const gsapReady = initGSAP();
     initNavigation(gsapReady);
     initHeroAnimation(gsapReady);
+    initWordmarkScroll(gsapReady);
     initDiveExperience(gsapReady);
     initScrollAnimations(gsapReady);
     initProjectShowcase(gsapReady);
@@ -61,13 +62,13 @@
       if (preloader) preloader.remove();
 
       if (gsapReady) {
-        gsap.set([".js-hero-title", ".hero-char", ".js-hero-subtitle", ".hero-accent-line"], {
+        gsap.set([".js-hero-title:not(.js-hero-wordmark)", ".js-hero-title:not(.js-hero-wordmark) .hero-char", ".js-hero-subtitle", ".hero-accent-line"], {
           clearProps: "opacity,transform,filter,clipPath,willChange"
         });
       }
     };
 
-    if (heroTitle && gsapReady && !reducedMotion && !heroTitle.dataset.split) {
+    if (heroTitle && !heroTitle.classList.contains("js-hero-wordmark") && gsapReady && !reducedMotion && !heroTitle.dataset.split) {
       const text = heroTitle.textContent || "";
       heroTitle.dataset.split = "true";
       heroTitle.setAttribute("aria-label", text);
@@ -96,7 +97,7 @@
       preloader.remove();
     }
 
-    gsap.set([".js-hero-title", ".hero-char", ".js-hero-subtitle", ".hero-accent-line"], {
+    gsap.set([".js-hero-title:not(.js-hero-wordmark)", ".js-hero-title:not(.js-hero-wordmark) .hero-char", ".js-hero-subtitle", ".hero-accent-line"], {
       willChange: "transform, opacity, clip-path, filter"
     });
 
@@ -111,13 +112,13 @@
       duration: 0.95,
       immediateRender: false
     }, 0)
-      .from(".js-hero-title", {
+      .from(".js-hero-title:not(.js-hero-wordmark)", {
         opacity: 0,
         filter: "blur(12px)",
         duration: 0.7,
         immediateRender: false
       }, "-=0.58")
-      .from(".hero-char", {
+      .from(".js-hero-title:not(.js-hero-wordmark) .hero-char", {
         opacity: 0,
         yPercent: 62,
         filter: "blur(14px)",
@@ -138,6 +139,152 @@
         duration: 0.88,
         immediateRender: false
       }, "-=0.64");
+  }
+
+  function initWordmarkScroll(gsapReady) {
+    const wordmark = document.querySelector(".js-hero-wordmark");
+    const wordmarkSvg = wordmark ? wordmark.querySelector(".hero-wordmark__svg") : null;
+    const wordmarkText = wordmark ? wordmark.querySelector(".hero-wordmark__text") : null;
+    const logo = document.querySelector(".site-logo");
+
+    if (!wordmark || !wordmarkSvg || !wordmarkText || !logo) return;
+
+    if (!gsapReady || reducedMotion) {
+      document.documentElement.classList.add("wordmark-static");
+      return;
+    }
+
+    const root = document.documentElement;
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const viewBoxWidth = wordmarkSvg.viewBox.baseVal.width || 1000;
+    const startTextLength = parseFloat(wordmarkText.getAttribute("textLength")) || viewBoxWidth;
+    const logoMeasurement = document.createElement("span");
+    logoMeasurement.textContent = (logo.textContent || "").trim();
+    logoMeasurement.setAttribute("aria-hidden", "true");
+    Object.assign(logoMeasurement.style, {
+      position: "fixed",
+      top: "0",
+      left: "-10000px",
+      visibility: "hidden",
+      pointerEvents: "none",
+      whiteSpace: "nowrap"
+    });
+    document.body.appendChild(logoMeasurement);
+    let metrics = null;
+
+    const measureNaturalTextMetrics = () => {
+      const clone = wordmarkText.cloneNode(true);
+      clone.removeAttribute("textLength");
+      clone.removeAttribute("lengthAdjust");
+      clone.setAttribute("opacity", "0");
+      clone.setAttribute("aria-hidden", "true");
+      wordmarkSvg.appendChild(clone);
+      const box = clone.getBBox();
+      const length = typeof clone.getComputedTextLength === "function" ? clone.getComputedTextLength() : box.width;
+      clone.remove();
+      return {
+        length: length || box.width || startTextLength,
+        x: box.x || 0,
+        y: box.y || 0
+      };
+    };
+
+    const measureLogoTextWidth = (fallbackWidth) => {
+      const style = getComputedStyle(logo);
+      logoMeasurement.style.fontFamily = style.fontFamily;
+      logoMeasurement.style.fontStyle = style.fontStyle;
+      logoMeasurement.style.fontWeight = style.fontWeight;
+      logoMeasurement.style.fontSize = style.fontSize;
+      logoMeasurement.style.lineHeight = style.lineHeight;
+      logoMeasurement.style.letterSpacing = style.letterSpacing;
+      logoMeasurement.style.textTransform = style.textTransform;
+      return logoMeasurement.getBoundingClientRect().width || fallbackWidth;
+    };
+
+    const measure = () => {
+      const wordmarkWidth = wordmark.offsetWidth || wordmark.getBoundingClientRect().width || 1;
+      const wordmarkHeight = wordmark.offsetHeight || wordmark.getBoundingClientRect().height || 1;
+      const logoRect = logo.getBoundingClientRect();
+      const logoTextWidth = measureLogoTextWidth(logoRect.width);
+      const startCenterY = window.innerHeight * (window.innerWidth < 900 ? 0.44 : 0.48);
+      const naturalText = measureNaturalTextMetrics();
+      const endTextLength = clamp(naturalText.length, viewBoxWidth * 0.35, startTextLength);
+      const endTextWidth = Math.max(1, wordmarkWidth * (endTextLength / viewBoxWidth));
+      const targetScale = clamp(logoTextWidth / endTextWidth, 0.04, 0.24);
+
+      metrics = {
+        startX: (window.innerWidth - wordmarkWidth) / 2,
+        startY: startCenterY - wordmarkHeight / 2,
+        endX: logoRect.left,
+        endY: logoRect.top + (logoRect.height - wordmarkHeight * targetScale) / 2,
+        endScale: targetScale,
+        startTextLength,
+        endTextLength
+      };
+
+      return metrics;
+    };
+
+    const getMetrics = () => metrics || measure();
+    const invalidateMetrics = () => {
+      metrics = null;
+    };
+
+    gsap.set(wordmark, {
+      x: () => getMetrics().startX,
+      y: () => getMetrics().startY,
+      scale: 1,
+      transformOrigin: "0 0"
+    });
+    gsap.set(wordmarkText, {
+      attr: {
+        textLength: () => getMetrics().startTextLength
+      }
+    });
+
+    const handoffStart = 0.9;
+    const setDockedState = (progress) => {
+      root.classList.toggle("wordmark-is-docked", progress >= handoffStart);
+    };
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#intro",
+        start: "top top",
+        end: () => `+=${window.innerHeight * (window.innerWidth < 900 ? 0.62 : 0.72)}`,
+        scrub: 0.32,
+        invalidateOnRefresh: true,
+        onRefreshInit: invalidateMetrics,
+        onRefresh: (self) => setDockedState(self.animation ? self.animation.progress() : self.progress)
+      }
+    });
+    tl.eventCallback("onUpdate", () => setDockedState(tl.progress()));
+
+    tl.to(wordmark, {
+      x: () => getMetrics().endX,
+      y: () => getMetrics().endY,
+      scale: () => getMetrics().endScale,
+      ease: "power2.out",
+      duration: 1
+    }, 0)
+      .to(wordmarkText, {
+        attr: {
+          textLength: () => getMetrics().endTextLength
+        },
+        ease: "power2.out",
+        duration: 1
+      }, 0);
+
+    window.addEventListener("resize", () => {
+      invalidateMetrics();
+      ScrollTrigger.refresh();
+    });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        invalidateMetrics();
+        ScrollTrigger.refresh();
+      });
+    }
   }
 
   function initDiveExperience(gsapReady) {
