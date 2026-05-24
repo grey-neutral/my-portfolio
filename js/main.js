@@ -16,6 +16,7 @@
     initWordmarkScroll(gsapReady);
     initDiveExperience(gsapReady);
     initScrollAnimations(gsapReady);
+    initLayeredStory(gsapReady);
     initProjectShowcase(gsapReady);
     initResearchArchive(gsapReady);
     if (enableDecorativeScrollEffects) {
@@ -666,6 +667,103 @@
           once: true
         }
       });
+    });
+  }
+
+  function initLayeredStory(gsapReady) {
+    const introPanel = document.querySelector("#intro[data-story-panel]");
+    const projectPanel = document.querySelector("#portfolio[data-story-panel]");
+    const panels = [introPanel, projectPanel].filter(Boolean);
+
+    if (!introPanel || !projectPanel) return;
+
+    panels.forEach((panel, index) => {
+      panel.style.setProperty("--story-z", index + 1);
+    });
+
+    if (!gsapReady || reducedMotion) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 900px)", () => {
+      const triggers = [];
+      const introContent = Array.from(introPanel.children).filter((child) => !child.classList.contains("scene"));
+
+      const resetIntro = () => {
+        introPanel.style.setProperty("--story-dim", "0");
+        gsap.set(introPanel, { clearProps: "filter,transform" });
+        gsap.set(projectPanel, { clearProps: "transform" });
+        gsap.set(introContent, { clearProps: "transform" });
+      };
+
+      gsap.set([introPanel, projectPanel], {
+        force3D: true,
+        transformOrigin: "50% 12%"
+      });
+
+      gsap.fromTo(projectPanel, {
+        yPercent: 8,
+        scale: 0.965
+      }, {
+        yPercent: 0,
+        scale: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: projectPanel,
+          start: "top bottom",
+          end: "top top",
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+          onLeave: () => gsap.set(projectPanel, { clearProps: "transform" })
+        }
+      });
+
+      if (introContent.length > 0) {
+        gsap.to(introContent, {
+          yPercent: -6,
+          ease: "none",
+          scrollTrigger: {
+            trigger: introPanel,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+            invalidateOnRefresh: true
+          }
+        });
+      }
+
+      triggers.push(ScrollTrigger.create({
+        trigger: projectPanel,
+        start: "top bottom",
+        end: "top top",
+        scrub: true,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          introPanel.style.setProperty("--story-dim", (progress * 0.42).toFixed(3));
+          gsap.set(introPanel, {
+            yPercent: -progress * 3.4,
+            scale: 1 - progress * 0.045,
+            filter: `saturate(${1 - progress * 0.14}) brightness(${1 - progress * 0.08})`
+          });
+        },
+        onLeaveBack: resetIntro
+      }));
+
+      triggers.push(ScrollTrigger.create({
+        trigger: introPanel,
+        start: "top top",
+        end: () => `+=${Math.round(window.innerHeight * 0.82)}`,
+        pin: true,
+        pinSpacing: false,
+        anticipatePin: 1,
+        invalidateOnRefresh: true
+      }));
+
+      return () => {
+        triggers.forEach((trigger) => trigger.kill());
+        resetIntro();
+      };
     });
   }
 
