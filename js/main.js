@@ -300,6 +300,10 @@
     let diveTicking = false;
     let depthKeyframes = [];
     let measuredScrollable = 0;
+    let lastDiveProgressKey = -1;
+    let lastMeterYKey = -1;
+    let lastPaletteKey = -1;
+    let lastDepthLabel = "";
     const depthFormatter = new Intl.NumberFormat("de-DE", {
       maximumFractionDigits: 0
     });
@@ -436,17 +440,39 @@
     };
 
     const updateProgress = () => {
+      const root = document.documentElement;
       const scrollable = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       if (Math.abs(scrollable - measuredScrollable) > 1) buildDepthKeyframes();
 
       const progress = Math.min(1, Math.max(0, window.scrollY / scrollable));
       const meters = window.scrollY >= scrollable - 1 ? maxDiveDepth : interpolateDepth(window.scrollY);
       const meterProgress = Math.min(1, Math.max(0, meters / maxDiveDepth));
+      const progressKey = Math.round(progress * 2000);
+      const meterYKey = Math.round(meterProgress * 10000);
+      const paletteKey = Math.round(meterProgress * 600);
 
-      document.documentElement.style.setProperty("--dive-progress", progress.toFixed(4));
-      document.documentElement.style.setProperty("--dive-meter-y", `${(meterProgress * 100).toFixed(2)}%`);
-      setDepthPalette(meterProgress);
-      if (depth) depth.textContent = `${depthFormatter.format(meters)} m`;
+      if (progressKey !== lastDiveProgressKey) {
+        root.style.setProperty("--dive-progress", (progressKey / 2000).toFixed(4));
+        lastDiveProgressKey = progressKey;
+      }
+
+      if (meterYKey !== lastMeterYKey) {
+        root.style.setProperty("--dive-meter-y", `${(meterYKey / 100).toFixed(2)}%`);
+        lastMeterYKey = meterYKey;
+      }
+
+      if (paletteKey !== lastPaletteKey) {
+        setDepthPalette(paletteKey / 600);
+        lastPaletteKey = paletteKey;
+      }
+
+      if (depth) {
+        const depthLabel = `${depthFormatter.format(Math.round(meters))} m`;
+        if (depthLabel !== lastDepthLabel) {
+          depth.textContent = depthLabel;
+          lastDepthLabel = depthLabel;
+        }
+      }
       setStageFromDepth(meters);
     };
 
@@ -691,7 +717,7 @@
 
       const resetIntro = () => {
         introPanel.style.setProperty("--story-dim", "0");
-        gsap.set(introPanel, { clearProps: "filter,transform" });
+        gsap.set(introPanel, { clearProps: "transform" });
         gsap.set(projectPanel, { clearProps: "transform" });
         gsap.set(introContent, { clearProps: "transform" });
       };
@@ -743,8 +769,7 @@
           introPanel.style.setProperty("--story-dim", (progress * 0.42).toFixed(3));
           gsap.set(introPanel, {
             yPercent: -progress * 3.4,
-            scale: 1 - progress * 0.045,
-            filter: `saturate(${1 - progress * 0.14}) brightness(${1 - progress * 0.08})`
+            scale: 1 - progress * 0.045
           });
         },
         onLeaveBack: resetIntro
@@ -835,7 +860,14 @@
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 900px)", () => {
-      const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth + window.innerWidth * 0.08);
+      const clampProgress = gsap.utils.clamp(0, 1);
+      const prominenceEase = gsap.parseEase("power2.out");
+      const setTrackX = gsap.quickSetter(track, "x", "px");
+      const cardSetters = cards.map((card) => ({
+        opacity: gsap.quickSetter(card, "opacity"),
+        y: gsap.quickSetter(card, "y", "px"),
+        scale: gsap.quickSetter(card, "scale")
+      }));
       const pageTop = (element) => {
         let top = 0;
         let current = element;
@@ -845,52 +877,76 @@
         }
         return top;
       };
-      const scrollLength = () => distance() + window.innerHeight * 2;
+      let projectDistance = 0;
       let projectStart = 0;
       let projectLength = 1;
-      const progressFromScroll = () => gsap.utils.clamp(0, 1, (window.scrollY - projectStart) / projectLength);
       let frame = 0;
       let refreshFrame = 0;
-      let lastRenderedProgress = -1;
+      let targetProgress = 0;
+      let renderedProgress = 0;
+      let focusedProject = -1;
+
+      const progressFromScroll = () => clampProgress((window.scrollY - projectStart) / projectLength);
 
       const renderProjects = (progress) => {
-        const clamped = gsap.utils.clamp(0, 1, progress);
+        const clamped = clampProgress(progress);
         const focusedIndex = clamped * Math.max(1, cards.length - 1);
+        const nextProject = Math.round(focusedIndex);
 
-        gsap.set(track, { x: -distance() * clamped });
+        if (nextProject !== focusedProject) {
+          focusedProject = nextProject;
+          activeProject = nextProject;
+        }
+
+        setTrackX(-projectDistance * clamped);
         cards.forEach((card, index) => {
-          const prominence = gsap.utils.clamp(0, 1, 1 - Math.abs(index - focusedIndex) / 2.4);
+          const prominence = prominenceEase(clampProgress(1 - Math.abs(index - focusedIndex) / 2.25));
+          const setters = cardSetters[index];
 
-          gsap.set(card, {
-            autoAlpha: 0.78 + prominence * 0.22,
-            y: (1 - prominence) * 16,
-            scale: 0.985 + prominence * 0.015
-          });
+          setters.opacity(0.84 + prominence * 0.16);
+          setters.y((1 - prominence) * 10);
+          setters.scale(0.992 + prominence * 0.008);
         });
       };
 
-      const renderFromScroll = () => {
-        frame = 0;
-        const progress = progressFromScroll();
-        if (Math.abs(progress - lastRenderedProgress) < 0.0005) return;
+      const animateTowardTarget = () => {
+        const delta = targetProgress - renderedProgress;
 
-        lastRenderedProgress = progress;
-        activeProject = Math.round(progress * (cards.length - 1));
-        renderProjects(progress);
+        if (Math.abs(delta) < 0.001) {
+          renderedProgress = targetProgress;
+          renderProjects(renderedProgress);
+          frame = 0;
+          return;
+        }
+
+        renderedProgress += delta * 0.34;
+        renderProjects(renderedProgress);
+        frame = window.requestAnimationFrame(animateTowardTarget);
       };
 
       const scheduleRender = () => {
+        targetProgress = progressFromScroll();
         if (frame) return;
-        frame = window.requestAnimationFrame(renderFromScroll);
+        frame = window.requestAnimationFrame(animateTowardTarget);
+      };
+
+      const renderImmediately = () => {
+        targetProgress = progressFromScroll();
+        renderedProgress = targetProgress;
+        if (frame) {
+          window.cancelAnimationFrame(frame);
+          frame = 0;
+        }
+        renderProjects(renderedProgress);
       };
 
       const refreshMeasurements = () => {
         refreshFrame = 0;
+        projectDistance = Math.max(0, track.scrollWidth - viewport.clientWidth + window.innerWidth * 0.08);
         projectStart = pageTop(stage) - window.innerHeight * 0.14;
-        projectLength = Math.max(1, scrollLength());
+        projectLength = Math.max(1, projectDistance + window.innerHeight * 2);
         document.documentElement.style.setProperty("--project-scroll-space", `${Math.ceil(projectLength)}px`);
-        lastRenderedProgress = -1;
-        renderFromScroll();
+        renderImmediately();
         ScrollTrigger.refresh();
       };
 
@@ -911,7 +967,7 @@
         window.removeEventListener("resize", scheduleRefresh);
         document.documentElement.style.removeProperty("--project-scroll-space");
         gsap.set(track, { clearProps: "transform" });
-        gsap.set(cards, { clearProps: "opacity,visibility,transform" });
+        gsap.set(cards, { clearProps: "opacity,transform" });
       };
     });
 
@@ -1056,25 +1112,37 @@
     const sections = Array.from(document.querySelectorAll("[data-section]"));
     const indicator = document.querySelector(".nav-indicator");
     const nav = document.querySelector(".site-nav");
+    let activeSectionId = "";
+    let shouldRefreshIndicator = false;
 
-    const setActive = (sectionId) => {
+    const setActive = (sectionId, force = false) => {
+      if (!force && sectionId === activeSectionId && !shouldRefreshIndicator) return;
+
       const activeLink = links.find((link) => link.getAttribute("href") === `#${sectionId}`);
       if (!activeLink) return;
 
-      links.forEach((link) => link.classList.toggle("is-active", link === activeLink));
+      if (sectionId !== activeSectionId) {
+        links.forEach((link) => link.classList.toggle("is-active", link === activeLink));
+        activeSectionId = sectionId;
+      }
 
-      if (!indicator || !nav || window.innerWidth < 900) return;
+      if (!indicator || !nav || window.innerWidth < 900) {
+        shouldRefreshIndicator = false;
+        return;
+      }
 
       const linkRect = activeLink.getBoundingClientRect();
       const navRect = nav.getBoundingClientRect();
       const left = linkRect.left - navRect.left;
+      shouldRefreshIndicator = false;
 
       if (gsapReady && !reducedMotion) {
         gsap.to(indicator, {
           x: left,
           width: linkRect.width,
           autoAlpha: 1,
-          duration: 0.42,
+          duration: force ? 0.26 : 0.38,
+          overwrite: "auto",
           ease: "power3.out"
         });
       } else {
@@ -1089,7 +1157,7 @@
     links.forEach((link) => {
       link.addEventListener("click", () => {
         const href = link.getAttribute("href") || "";
-        setActive(href.replace("#", ""));
+        setActive(href.replace("#", ""), true);
       });
     });
 
@@ -1112,7 +1180,10 @@
     };
 
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("resize", scheduleUpdate);
+    window.addEventListener("resize", () => {
+      shouldRefreshIndicator = true;
+      scheduleUpdate();
+    });
     scheduleUpdate();
 
     initMagnetic(gsapReady);

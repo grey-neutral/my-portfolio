@@ -2955,15 +2955,16 @@ em {
   border-color: var(--panel-border) !important;
   background: var(--panel-bg) !important;
   box-shadow:
-    0 18px 54px rgba(0, 7, 18, calc(0.18 + var(--depth-darkness) * 0.18)),
+    0 16px 42px rgba(0, 7, 18, calc(0.16 + var(--depth-darkness) * 0.16)),
     inset 0 0 0 1px rgba(255, 255, 255, 0.06) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   transform-style: flat !important;
+  will-change: transform, opacity !important;
   transition:
     border-color 220ms var(--ease-out),
-    box-shadow 220ms var(--ease-out),
-    transform 220ms var(--ease-out) !important;
+    background 220ms var(--ease-out),
+    box-shadow 220ms var(--ease-out) !important;
 }
 
 .project-card::before {
@@ -2987,13 +2988,13 @@ em {
   background: rgba(3, 12, 26, calc(0.28 + var(--depth-darkness) * 0.36)) !important;
   border-color: rgba(236, 255, 255, 0.42) !important;
   box-shadow:
-    0 22px 62px rgba(0, 7, 18, calc(0.22 + var(--depth-darkness) * 0.2)),
+    0 18px 48px rgba(0, 7, 18, calc(0.2 + var(--depth-darkness) * 0.18)),
     inset 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
 }
 
 .project-card.is-reflex-active {
   box-shadow:
-    0 18px 54px rgba(0, 7, 18, calc(0.18 + var(--depth-darkness) * 0.18)),
+    0 16px 42px rgba(0, 7, 18, calc(0.16 + var(--depth-darkness) * 0.16)),
     inset 0 0 0 1px rgba(255, 255, 255, 0.06) !important;
 }
 
@@ -3254,7 +3255,7 @@ em {
 @media (min-width: 900px) {
   .story-panel {
     min-height: 100svh;
-    will-change: transform, filter;
+    will-change: transform;
   }
 
   .story-panel--intro {
