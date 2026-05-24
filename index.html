@@ -4,575 +4,213 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JANET B. – Portfolio & Research</title>
-    <!-- 
-      FONT NOTES:
-      • Headings use “Bosch Display”
-      • Subheadings & body, Button  text use a minimalist font (Trebuchet MS)
-    -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap" />
-    <style>
-      /* =============== Base Styles =============== */
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-size: 16px;
-        line-height: 1.5;
-        font-weight: 300; /* light */
-        font-family: 'Trebuchet MS', sans-serif;
-        background-color: #fff;
-        color: #333;
-        overflow-x: hidden;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-        border-bottom: 1px solid transparent;
-        transition: border-bottom 0.3s;
-      }
-      a:hover {
-        border-bottom: 1px solid #C49E63; /* deep golden yellow-beige accent */
-      }
-      /* =============== Typography =============== */
-
-      @font-face {
-        font-family: 'Bosch Display';
-        src: url('fonts/bosch.otf') format('opentype');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-      }
-      /* Headings – Bosch Display (assumed available) */
-      h2 {
-        font-family: 'Bosch Display', sans-serif;
-        text-align: center;
-        margin-bottom: 20px;
-        font-weight: normal;
-      }
-      .section-heading {
-        font-size: 144px;
-        margin: 40px 0 20px;
-      }
-      /* Subheadings: 32px */
-      .subheading {
-        font-size: 32px;
-        font-family: 'Trebuchet MS', sans-serif;
-      }
-      /* Button text: Trebuchet MS in 18px (semi-bold) */
-      button,
-      .btn {
-        font-family: 'Trebuchet MS', sans-serif;
-        font-size: 18px;
-        font-weight: 600;
-      }
-      
-      /* =============== Layout & Sections =============== */
-      header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.95);
-        z-index: 1000;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        padding: 10px 0;
-      }
-      nav {
-        width: 90%;
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      /* Header: Name in all capitals on the left */
-      .logo {
-        font-family: 'Bosch Display', sans-serif;
-        font-size: 24px;
-        font-weight: normal;
-        letter-spacing: 2px;
-      }
-      .nav-links {
-        list-style: none;
-        display: flex;
-      }
-      .nav-links li {
-        margin: 0 15px;
-      }
-      
-      /* Each section (except Contact) fills full viewport height */
-      .section {
-        min-height: 100vh;
-        padding: 80px 20px 40px; /* top padding to account for fixed header */
-        position: relative;
-        opacity: 0;
-      }
-      /* Alternate backgrounds */
-      .intro, .writing { background-color: #fff; }
-      .portfolio { background-color: #f7f7f7; }
-      /* Contact section: Only about one‑third of viewport height */
-      .contact {
-        min-height: 33vh;
-        background-color: #333;
-        color: #fff;
-        padding: 40px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-      }
-      
-      /* =============== Animations =============== */
-      @keyframes slideFromTop {
-        from { transform: translateY(-50px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-      }
-      @keyframes slideFromBottom {
-        from { transform: translateY(50px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-      @keyframes panInLeft {
-        from { transform: translateX(-50px); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-      }
-      /* Utility animation classes */
-      .animate-slide-top { animation: slideFromTop 1.5s forwards; }
-      .animate-slide-bottom { animation: slideFromBottom 1.5s forwards; }
-      .animate-fade { animation: fadeIn 1.5s forwards; }
-      .animate-pan-left { animation: panInLeft 1s forwards; }
-      
-      /* =============== Intro Section =============== */
-      .intro {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-      }
-      .main-heading {
-        font-size: 72px;
-        font-weight: bold;
-        margin-bottom: 20px;
-      }
-      .tagline {
-        font-size: 24px;
-        margin-bottom: 40px;
-      }
-      
-      /* =============== Projects Section (Carousel) =============== */
-      .carousel-container {
-        position: relative;
-        overflow: hidden;
-        margin: 0 auto;
-        max-width: 1200px;
-      }
-      .carousel-track {
-        display: flex;
-        transition: transform 0.5s ease;
-      }
-      .tile {
-        position: relative;
-        background-color: #fff;
-        border-radius: 15px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        margin: 10px;
-        padding: 20px;
-        flex: 0 0 calc((100% / 3.5) - 20px); /* ~3.5 tiles visible */
-        cursor: pointer;
-        overflow: hidden;
-        transition: transform 0.3s;
-        opacity: 0;
-      }
-      .tile:hover {
-        transform: translateY(-5px); /* Use translateY instead of scale */
-        transition: transform 0.3s; /* Smooth transition */
-      }
-      .tile-emoji {
-        font-size: 32px;
-        position: absolute;
-        top: 15px;
-        left: 15px;
-      }
-      .tile-title {
-        font-size: 24px; /* same as writing section headers */
-        margin-top: 50px; /* space for emoji */
-        margin-bottom: 10px;
-      }
-      .tile-description {
-        font-size: 16px;
-      }
-      /* Carousel Navigation Buttons */
-      .carousel-nav {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        gap: 10px;
-      }
-      .carousel-btn {
-        background-color: #555;
-        border: none;
-        border-radius: 50%;
-        color: #fff;
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-      .carousel-btn:hover {
-        background-color: #777;
-      }
-      
-      /* =============== Writing Section (Collapsible Tile) =============== */
-      .writing-tile {
-        background-color: #f7f7f7;
-        border-radius: 15px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        padding: 20px;
-        margin: 0 10%; /* increase white space on left/right */
-        display: flex;
-        align-items: stretch;
-        opacity: 0;
-      }
-      .collapsible-container {
-        flex: 2;
-      }
-      .collapsible-section {
-        border-bottom: 1px solid #ddd;
-        padding: 10px 0;
-        cursor: pointer;
-        transition: background 0.3s;
-      }
-      /* Fine line separation that doesn’t span full width */
-      .collapsible-section:not(:last-child) {
-        margin-bottom: 10px;
-      }
-      .collapsible-header {
-        display: flex;
-        align-items: center;
-        font-size: 24px; /* same as project titles */
-      }
-      /* Arrow button: now plain text plus/minus, no half‑circle styling */
-      .arrow-btn {
-        background: none;
-        border: none;
-        font-size: 24px;
-        margin-right: 10px;
-        cursor: pointer;
-      }
-      .collapsible-content {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-      }
-      .collapsible-section.open .collapsible-content {
-        max-height: 300px; /* adjust as needed */
-      }
-      
-      /* Right-side emoji for writing section */
-      .writing-emoji {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 64px;
-        opacity: 0;
-      }
-      
-      /* =============== Contact Section =============== */
-      .contact-inner {
-        text-align: center;
-        opacity: 0;
-      }
-      .contact-links {
-        font-size: 18px;
-      }
-      .contact-links a {
-        margin: 0 10px;
-        color: #C49E63;
-      }
-      
-      /* =============== Fade‑in on Scroll =============== */
-      .visible {
-        opacity: 1;
-        transition: opacity 1s ease-in;
-      }
-    </style>
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+    <link rel="preload" href="fonts/bosch.otf" as="font" type="font/otf" crossorigin />
+    <link rel="preload" href="background_waves_clean.png" as="image" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script defer src="js/gsap.min.js"></script>
+    <script defer src="js/ScrollTrigger.min.js"></script>
+    <script defer src="js/main.js"></script>
   </head>
   <body>
-    <!-- ========= Header / Navigation ========= -->
-    <header class="animate-slide-top">
-      <nav>
+    <div class="preloader" aria-hidden="true">
+      <div class="preloader__mark">JANET B.</div>
+    </div>
+
+    <div class="scroll-progress" aria-hidden="true">
+      <div class="scroll-progress__bar"></div>
+    </div>
+
+    <div class="page-noise" aria-hidden="true"></div>
+    <div class="ocean-ambient" aria-hidden="true">
+      <span class="ambient-current ambient-current--one"></span>
+      <span class="ambient-current ambient-current--two"></span>
+      <span class="ambient-current ambient-current--three"></span>
+    </div>
+    <div class="dive-atmosphere" aria-hidden="true">
+      <div class="dive-atmosphere__layer dive-atmosphere__layer--surface"></div>
+      <div class="dive-atmosphere__layer dive-atmosphere__layer--midwater"></div>
+      <div class="dive-atmosphere__layer dive-atmosphere__layer--floor"></div>
+      <div class="dive-atmosphere__layer dive-atmosphere__layer--hadal"></div>
+      <span class="dive-particle dive-particle--one"></span>
+      <span class="dive-particle dive-particle--two"></span>
+      <span class="dive-particle dive-particle--three"></span>
+    </div>
+    <div class="dive-meter" aria-hidden="true">
+      <span class="dive-meter__phase" data-dive-phase>Surface</span>
+      <span class="dive-meter__line">
+        <span class="dive-meter__tick dive-meter__tick--surface">0 m</span>
+        <span class="dive-meter__tick dive-meter__tick--midwater">200 m</span>
+        <span class="dive-meter__tick dive-meter__tick--deep-midwater">1.000 m</span>
+        <span class="dive-meter__tick dive-meter__tick--abyss">4.000 m</span>
+        <span class="dive-meter__tick dive-meter__tick--hadal">6.000 m</span>
+        <span class="dive-meter__tick dive-meter__tick--deepest">10.935 m</span>
+        <span class="dive-meter__marker"></span>
+      </span>
+      <span class="dive-meter__depth" data-dive-depth>0 m</span>
+    </div>
+    <div class="custom-cursor" aria-hidden="true"></div>
+    <div class="custom-cursor custom-cursor--halo" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary">
         <div class="logo">JANET B.</div>
         <ul class="nav-links">
-          <li><a href="#intro">Home</a></li>
-          <li><a href="#portfolio">Projects</a></li>
-          <li><a href="#writing">Writing</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a class="nav-link magnetic" href="#intro">Home</a></li>
+          <li><a class="nav-link magnetic" href="#portfolio">Projects</a></li>
+          <li><a class="nav-link magnetic" href="#writing">Writing</a></li>
+          <li><a class="nav-link magnetic" href="#contact">Contact</a></li>
         </ul>
+        <span class="nav-indicator" aria-hidden="true"></span>
       </nav>
     </header>
-    
-    <!-- ========= Intro Section ========= -->
-    <section id="intro" class="section intro">
-      <div class="hero-content animate-slide-bottom">
-        <h1 class="main-heading">Hi, I'm Janet</h1>
-        <p class="tagline">Dentist | AI in healthcare researcher | Tech and AI enthusiast</p>
-      </div>
-    </section>
-    
-    <!-- ========= Projects Section (Carousel) ========= -->
-    <section id="portfolio" class="section portfolio">
-      <h2 class="section-heading visible">PROJECTS</h2>
-      <div class="carousel-container">
-        <div class="carousel-track">
-          <!-- Tile 1: Finmedio -->
-          <a href="https://finmedio.de/" target="_blank" class="tile">
-            <span class="tile-emoji">🦷</span>
-            <h3 class="tile-title">Finmedio</h3>
-            <p class="tile-description">AI practice intelligence for automated billing and documentation. Winner at Hacknation's Global AI Hackathon, Venture Track and transatlantic AI pitch competition.</p>
-          </a>
-          <!-- Tile 2: OpenCare -->
-          <a href="https://github.com/AmineChr54/Ai_for_global_healthcare_access" target="_blank" class="tile">
-            <span class="tile-emoji">⚕️</span>
-            <h3 class="tile-title">OpenCare</h3>
-            <p class="tile-description">
-              AI-powered platform mapping and analyzing global healthcare access
-            </p>
-          </a>
-          <!-- Tile 3: Anaesthesia -->
-          <a href="https://anaesthesia.streamlit.app/" target="_blank" class="tile">
-            <span class="tile-emoji">💉</span>
-            <h3 class="tile-title">Anaesthesia</h3>
-            <p class="tile-description">
-              Streamlit-based web app identifying the right type of Articaine‑based anaesthesia by evaluating contraindications and calculating maximum dosage.
-              <em>(App can be woken up again if it has gone to sleep!)</em>
-            </p>
-          </a>
-          <!-- Tile 4: AI Research Article Parser -->
-          <a href="https://github.com/darroush/Dental_AI_Articles_Parser" target="_blank" class="tile">
-            <span class="tile-emoji">🤖</span>
-            <h3 class="tile-title">AI Research Article Parser</h3>
-            <p class="tile-description">
-              Automates retrieval and summarization of research abstracts in AI for dentistry.
-            </p>
-          </a>
-          <!-- Tile 5: Visual Travel Planner -->
-          <a href="https://visual-travel-planner.streamlit.app/" target="_blank" class="tile">
-            <span class="tile-emoji">🗺️</span>
-            <h3 class="tile-title">Visual Travel Planner</h3>
-            <p class="tile-description">Streamlit-based web app that lets users select attractions, view them on a map, and generate a text-based multi-day itinerary, which can be downloaded as a PDF.</p>
-          </a>
-          <!-- Tile 6: Stealth project -->
-          <a href="https://en.wikipedia.org/wiki/Sensor" target="_blank" class="tile">
-            <span class="tile-emoji">🕵️‍♀️</span>
-            <h3 class="tile-title">Stealth project</h3>
-            <p class="tile-description">Worked on a sensor hardware-software solution over the course of 2 hackathons and a 3-month venture program. Secured first place out of 40 + teams in one of the hackathons.</p>
-          </a>
+
+    <main>
+      <section id="intro" class="section intro" data-section="Home" data-dive-stage="surface" data-dive-label="Surface" data-dive-depth="0 m">
+        <div class="scene" aria-hidden="true">
+          <div class="light-field light-field--one"></div>
+          <div class="light-field light-field--two"></div>
+          <div class="caustic-field"></div>
+          <div class="water-surface"></div>
         </div>
-        <!-- Carousel Navigation -->
-        <div class="carousel-nav">
-          <button class="carousel-btn prev">&#10094;</button>
-          <button class="carousel-btn next">&#10095;</button>
+        <div class="hero-content">
+          <h1 class="main-heading js-hero-title">Hi, I'm Janet</h1>
+          <p class="tagline js-hero-subtitle">Dentist | AI in healthcare researcher | Tech and AI enthusiast</p>
+          <div class="hero-accent-line" aria-hidden="true"></div>
         </div>
-      </div>
-    </section>
-    
-    <!-- ========= Writing Section (Collapsible Tile) ========= -->
-    <section id="writing" class="section writing">
-      <h2 class="section-heading visible">RESEARCH AND WRITING</h2>
-      <div class="writing-tile">
-        <div class="collapsible-container">
-          <!-- Collapsible Section: Publications on AI in healthcare -->
-          <div class="collapsible-section" data-index="0">
-            <div class="collapsible-header">
-              <button class="arrow-btn">+</button>
-              <span class="header-text">Publications on AI in healthcare</span>
-            </div>
-            <div class="collapsible-content">
-              <ul>
-                <li><a href="https://doi.org/10.5114/jos.2025.155804" target="_blank">The role of large language models in dental diagnosis, treatment planning, and prognosis</a></li>
-                <li><a href="https://doi.org/10.1016/j.jdent.2025.106130" target="_blank">Data sharing for responsible artificial intelligence in dentistry: a narrative review of legal frameworks and privacy-preserving techniques</a></li>
-                <li><a href="https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-025-03129-x" target="_blank">Diagnostic Test Accuracy of AI in Detecting Obstructive Sleep Apnea: A Systematic Review</a></li>
-                <li><a href="https://pubmed.ncbi.nlm.nih.gov/39182639/" target="_blank">Core Outcomes Measures in Dental Computer Vision Studies (DentalCOMS)</a></li>
-                <li><a href="https://pubmed.ncbi.nlm.nih.gov/37209769/" target="_blank">Federated vs Local vs Central Deep Learning of Tooth Segmentation on Panoramic Radiographs</a></li>
-                <li><a href="https://pubmed.ncbi.nlm.nih.gov/36010318/" target="_blank">Emulating Clinical Diagnostic Reasoning for Jaw Cysts with Machine Learning</a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- Collapsible Section: Presentations -->
-          <div class="collapsible-section" data-index="1">
-            <div class="collapsible-header">
-              <button class="arrow-btn">+</button>
-              <span class="header-text">Presentations</span>
-            </div>
-            <div class="collapsible-content">
-              <ul>
-                <li><strong>Benchmarking Dental AI: The case for global data collaboration</strong>, Mar 2026 - Distinguished speaker series at the HAIDENer satelite symposium Transforming Oral Health: Simulations, AI, and Beyond!, IADR General session San Diego, CA, USA </li>
-                <li><strong>My Journey Through the Venture Track</strong>, Feb 2026, Keynote at the 4th Hack-Nation Global AI Hackathon, Munich Hub</li>
-                <li><strong>Pitching & Storytelling: What Made My Project Stand Out</strong>,Feb 2026 - Hack-Nation Fireside Chat Series</li>
-                <li><strong>The Role of Humans in an AI-First World: Insights from the Next Generation of Leaders</strong>, Jan 2026 - Roundtable at the AI House Davos during the World Economic Forum</li>
-                <li><strong>Finmedio: AI - Practice Intelligence for automated documentation and billing for dental practices </strong>, Nov 2025 – Presentation at Harvard Kennedy School, 1st place winner of the transatlantic AI pitch competition</li>
-                <li><strong>Data sharing for responsible artificial intelligence in dentistry: Safeguarding data privacy</strong>, Nov 2025 – Poster at Harvard School of Dental Medicine, 2nd Global Symposium on AI in Dentistry</li>
-                <li><strong>The Impact of AI on Healthcare Policy and Regulation</strong>, Nov 2023 – Poster at Harvard School of Dental Medicine, Global Symposium on AI in Dentistry</li>
-                <li><strong>Microbial and Sialochemical Saliva Shifts with Tumor Irradiation</strong>, Sep 2023 – Oral presentation at CED-IADR Conference, Rhodes, Greece</li>
-                <li><strong>AI in Dentistry - A Brief Market Overview</strong>, Mar 2023 – Oral presentation at ITU-WHO TG-Dental Symposium, hosted at the MIT</li>
-              </ul>
-            </div>
-          </div>
-          <!-- Collapsible Section: Blog posts on AI -->
-          <div class="collapsible-section" data-index="2">
-            <div class="collapsible-header">
-              <button class="arrow-btn">+</button>
-              <span class="header-text">Blog posts on AI</span>
-            </div>
-            <div class="collapsible-content">
-              <ul>
-                <li><a href="https://medium.com/@janetbrinz/the-ai-doctor-will-see-you-now-navigating-the-path-to-agi-in-healthcare-0a605ad848d1" target="_blank">The AI Doctor Will See You Now: Navigating the Path to AGI in Healthcare</a></li>
-                <li><a href="https://www.lesswrong.com/posts/kduqRKTfJHQGKDdFC/ambiguities-or-the-issues-we-face-with-ai-in-medicine" target="_blank">Ambiguities or the issues we face with AI in medicine</a></li>
-                <li><a href="https://www.lesswrong.com/posts/5q99avFEwAFBQd3D8/personal-ruminations-on-ai-s-missing-variable-problem" target="_blank">Personal Ruminations on AI's Missing Variable Problem</a></li>
-                <li><a href="https://www.lesswrong.com/posts/D4wywAZsPCFM5jP4G/text-first-evidence-later-managing-quality-and-trust-in-an" target="_blank">Text First, Evidence Later? Managing Quality and Trust in an Era of AI-Augmented Research</a></li>
-                <li><a href="https://www.lesswrong.com/posts/gxQ9XoYz6G3P66fxP/the-ai-s-toolbox-from-soggy-toast-to-optimal-solutions" target="_blank">The AI's Toolbox: From Soggy Toast to Optimal Solutions</a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- Collapsible Section: Book -->
-          <div class="collapsible-section" data-index="3">
-            <div class="collapsible-header">
-              <button class="arrow-btn">+</button>
-              <span class="header-text">Book</span>
-            </div>
-            <div class="collapsible-content">
-              <ul>
-                <li><a href="https://www.amazon.de/gp/product/B0BM3P3WFZ/ref=ewc_pr_img_1?smid=A3JWKAKR8XB7XF&psc=1" target="_blank">Baking book in German – Cakes, biscuits, muffins and more</a></li>
-              </ul>
+      </section>
+
+      <section id="portfolio" class="section portfolio" data-section="Projects" data-dive-stage="midwater" data-dive-label="Midwater" data-dive-depth="200-1.000 m" aria-labelledby="projects-heading">
+        <div class="section-kicker" aria-hidden="true"></div>
+        <h2 id="projects-heading" class="section-heading js-section-heading">PROJECTS</h2>
+        <div class="project-stage">
+          <div class="project-viewport">
+            <div class="carousel-track project-track">
+              <a href="https://finmedio.de/" target="_blank" rel="noreferrer" class="tile project-card">
+                <span class="tile-emoji" aria-hidden="true">🦷</span>
+                <h3 class="tile-title">Finmedio</h3>
+                <p class="tile-description">AI practice intelligence for automated billing and documentation. Winner at Hacknation's Global AI Hackathon, Venture Track and transatlantic AI pitch competition.</p>
+              </a>
+              <a href="https://github.com/AmineChr54/Ai_for_global_healthcare_access" target="_blank" rel="noreferrer" class="tile project-card">
+                <span class="tile-emoji" aria-hidden="true">⚕️</span>
+                <h3 class="tile-title">OpenCare</h3>
+                <p class="tile-description">AI-powered platform mapping and analyzing global healthcare access</p>
+              </a>
+              <a href="https://anaesthesia.streamlit.app/" target="_blank" rel="noreferrer" class="tile project-card">
+                <span class="tile-emoji" aria-hidden="true">💉</span>
+                <h3 class="tile-title">Anaesthesia</h3>
+                <p class="tile-description">Streamlit-based web app identifying the right type of Articaine‑based anaesthesia by evaluating contraindications and calculating maximum dosage. <em>(App can be woken up again if it has gone to sleep!)</em></p>
+              </a>
+              <a href="https://github.com/darroush/Dental_AI_Articles_Parser" target="_blank" rel="noreferrer" class="tile project-card">
+                <span class="tile-emoji" aria-hidden="true">🤖</span>
+                <h3 class="tile-title">AI Research Article Parser</h3>
+                <p class="tile-description">Automates retrieval and summarization of research abstracts in AI for dentistry.</p>
+              </a>
+              <a href="https://visual-travel-planner.streamlit.app/" target="_blank" rel="noreferrer" class="tile project-card">
+                <span class="tile-emoji" aria-hidden="true">🗺️</span>
+                <h3 class="tile-title">Visual Travel Planner</h3>
+                <p class="tile-description">Streamlit-based web app that lets users select attractions, view them on a map, and generate a text-based multi-day itinerary, which can be downloaded as a PDF.</p>
+              </a>
+              <a href="https://en.wikipedia.org/wiki/Sensor" target="_blank" rel="noreferrer" class="tile project-card">
+                <span class="tile-emoji" aria-hidden="true">🕵️‍♀️</span>
+                <h3 class="tile-title">Stealth project</h3>
+                <p class="tile-description">Worked on a sensor hardware-software solution over the course of 2 hackathons and a 3-month venture program. Secured first place out of 40 + teams in one of the hackathons.</p>
+              </a>
             </div>
           </div>
         </div>
-        <!-- Right-side Emoji Display (shows corresponding emoji) -->
-        <div class="writing-emoji">
-          <span id="writing-emoji-display">📄</span>
+      </section>
+
+      <section id="writing" class="section writing" data-section="Writing" data-dive-stage="floor" data-dive-label="Abyssal archive" data-dive-depth="4.000-6.000 m" aria-labelledby="writing-heading">
+        <div class="archive-shell">
+          <div class="archive-rail">
+            <h2 id="writing-heading" class="section-heading js-section-heading">RESEARCH AND WRITING</h2>
+            <div class="writing-emoji archive-emblem" aria-hidden="true">
+              <span id="writing-emoji-display">📄</span>
+            </div>
+          </div>
+          <div class="writing-tile archive-list">
+            <section class="collapsible-section archive-group" data-index="0">
+              <div class="collapsible-header archive-header">
+                <span class="arrow-btn" aria-hidden="true">+</span>
+                <h3 class="header-text">Publications on AI in healthcare</h3>
+              </div>
+              <div class="collapsible-content archive-content">
+                <ul>
+                  <li><a href="https://doi.org/10.5114/jos.2025.155804" target="_blank" rel="noreferrer">The role of large language models in dental diagnosis, treatment planning, and prognosis</a></li>
+                  <li><a href="https://doi.org/10.1016/j.jdent.2025.106130" target="_blank" rel="noreferrer">Data sharing for responsible artificial intelligence in dentistry: a narrative review of legal frameworks and privacy-preserving techniques</a></li>
+                  <li><a href="https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-025-03129-x" target="_blank" rel="noreferrer">Diagnostic Test Accuracy of AI in Detecting Obstructive Sleep Apnea: A Systematic Review</a></li>
+                  <li><a href="https://pubmed.ncbi.nlm.nih.gov/39182639/" target="_blank" rel="noreferrer">Core Outcomes Measures in Dental Computer Vision Studies (DentalCOMS)</a></li>
+                  <li><a href="https://pubmed.ncbi.nlm.nih.gov/37209769/" target="_blank" rel="noreferrer">Federated vs Local vs Central Deep Learning of Tooth Segmentation on Panoramic Radiographs</a></li>
+                  <li><a href="https://pubmed.ncbi.nlm.nih.gov/36010318/" target="_blank" rel="noreferrer">Emulating Clinical Diagnostic Reasoning for Jaw Cysts with Machine Learning</a></li>
+                </ul>
+              </div>
+            </section>
+
+            <section class="collapsible-section archive-group" data-index="1">
+              <div class="collapsible-header archive-header">
+                <span class="arrow-btn" aria-hidden="true">+</span>
+                <h3 class="header-text">Presentations</h3>
+              </div>
+              <div class="collapsible-content archive-content">
+                <ul>
+                  <li><strong>Benchmarking Dental AI: The case for global data collaboration</strong>, Mar 2026 - Distinguished speaker series at the HAIDENer satelite symposium Transforming Oral Health: Simulations, AI, and Beyond!, IADR General session San Diego, CA, USA </li>
+                  <li><strong>My Journey Through the Venture Track</strong>, Feb 2026, Keynote at the 4th Hack-Nation Global AI Hackathon, Munich Hub</li>
+                  <li><strong>Pitching & Storytelling: What Made My Project Stand Out</strong>,Feb 2026 - Hack-Nation Fireside Chat Series</li>
+                  <li><strong>The Role of Humans in an AI-First World: Insights from the Next Generation of Leaders</strong>, Jan 2026 - Roundtable at the AI House Davos during the World Economic Forum</li>
+                  <li><strong>Finmedio: AI - Practice Intelligence for automated documentation and billing for dental practices </strong>, Nov 2025 – Presentation at Harvard Kennedy School, 1st place winner of the transatlantic AI pitch competition</li>
+                  <li><strong>Data sharing for responsible artificial intelligence in dentistry: Safeguarding data privacy</strong>, Nov 2025 – Poster at Harvard School of Dental Medicine, 2nd Global Symposium on AI in Dentistry</li>
+                  <li><strong>The Impact of AI on Healthcare Policy and Regulation</strong>, Nov 2023 – Poster at Harvard School of Dental Medicine, Global Symposium on AI in Dentistry</li>
+                  <li><strong>Microbial and Sialochemical Saliva Shifts with Tumor Irradiation</strong>, Sep 2023 – Oral presentation at CED-IADR Conference, Rhodes, Greece</li>
+                  <li><strong>AI in Dentistry - A Brief Market Overview</strong>, Mar 2023 – Oral presentation at ITU-WHO TG-Dental Symposium, hosted at the MIT</li>
+                </ul>
+              </div>
+            </section>
+
+            <section class="collapsible-section archive-group" data-index="2">
+              <div class="collapsible-header archive-header">
+                <span class="arrow-btn" aria-hidden="true">+</span>
+                <h3 class="header-text">Blog posts on AI</h3>
+              </div>
+              <div class="collapsible-content archive-content">
+                <ul>
+                  <li><a href="https://medium.com/@janetbrinz/the-ai-doctor-will-see-you-now-navigating-the-path-to-agi-in-healthcare-0a605ad848d1" target="_blank" rel="noreferrer">The AI Doctor Will See You Now: Navigating the Path to AGI in Healthcare</a></li>
+                  <li><a href="https://www.lesswrong.com/posts/kduqRKTfJHQGKDdFC/ambiguities-or-the-issues-we-face-with-ai-in-medicine" target="_blank" rel="noreferrer">Ambiguities or the issues we face with AI in medicine</a></li>
+                  <li><a href="https://www.lesswrong.com/posts/5q99avFEwAFBQd3D8/personal-ruminations-on-ai-s-missing-variable-problem" target="_blank" rel="noreferrer">Personal Ruminations on AI's Missing Variable Problem</a></li>
+                  <li><a href="https://www.lesswrong.com/posts/D4wywAZsPCFM5jP4G/text-first-evidence-later-managing-quality-and-trust-in-an" target="_blank" rel="noreferrer">Text First, Evidence Later? Managing Quality and Trust in an Era of AI-Augmented Research</a></li>
+                  <li><a href="https://www.lesswrong.com/posts/gxQ9XoYz6G3P66fxP/the-ai-s-toolbox-from-soggy-toast-to-optimal-solutions" target="_blank" rel="noreferrer">The AI's Toolbox: From Soggy Toast to Optimal Solutions</a></li>
+                </ul>
+              </div>
+            </section>
+
+            <section class="collapsible-section archive-group" data-index="3">
+              <div class="collapsible-header archive-header">
+                <span class="arrow-btn" aria-hidden="true">+</span>
+                <h3 class="header-text">Book</h3>
+              </div>
+              <div class="collapsible-content archive-content">
+                <ul>
+                  <li><a href="https://www.amazon.de/gp/product/B0BM3P3WFZ/ref=ewc_pr_img_1?smid=A3JWKAKR8XB7XF&psc=1" target="_blank" rel="noreferrer">Baking book in German – Cakes, biscuits, muffins and more</a></li>
+                </ul>
+              </div>
+            </section>
+          </div>
         </div>
-      </div>
-    </section>
-    
-    <!-- ========= Contact Section ========= -->
-    <footer id="contact" class="section contact">
+      </section>
+    </main>
+
+    <footer id="contact" class="section contact" data-section="Contact" data-dive-stage="hadal" data-dive-label="Challenger Deep" data-dive-depth="6.000-10.935 m">
+      <div class="footer-wordmark" aria-hidden="true">JANET B.</div>
       <div class="contact-inner">
-        <h2 style="font-size:32px; margin-bottom:10px;">Contact</h2>
+        <h2>Contact</h2>
         <div class="contact-links">
-          <a href="https://www.linkedin.com/in/dr-janet-brinz/" target="_blank">LinkedIn</a>
-          <a href="https://github.com/grey-neutral" target="_blank">GitHub</a>
-          <a href="mailto:thehumanproject.ai@gmail.com?subject=Inquiry" target="_blank">Email</a>
+          <a class="magnetic" href="https://www.linkedin.com/in/dr-janet-brinz/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="magnetic" href="https://github.com/grey-neutral" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="magnetic" href="mailto:thehumanproject.ai@gmail.com?subject=Inquiry" target="_blank">Email</a>
         </div>
       </div>
     </footer>
-    
-    <!-- =============== JavaScript =============== -->
-    <script>
-      /* --------- Section Fade‑in on Scroll --------- */
-      const sections = document.querySelectorAll('.section, .writing-tile, .contact-inner, .tile, .writing-emoji');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-            entry.target.style.opacity = 1;
-          }
-        });
-      }, { threshold: 0.3 });
-      sections.forEach(sec => observer.observe(sec));
-      
-      /* --------- Carousel Functionality --------- */
-      const track = document.querySelector('.carousel-track');
-      const tiles = document.querySelectorAll('.tile');
-      const prevBtn = document.querySelector('.carousel-btn.prev');
-      const nextBtn = document.querySelector('.carousel-btn.next');
-      let currentIndex = 0;
-      const totalTiles = tiles.length;
-      function updateTileWidth() {
-        return tiles[0].getBoundingClientRect().width + 20;
-      }
-      function moveCarousel() {
-        const tileWidth = updateTileWidth();
-        track.style.transform = `translateX(-${currentIndex * tileWidth}px)`;
-      }
-      nextBtn.addEventListener('click', () => {
-        const maxIndex = totalTiles - 3; // Approximate: 3 tiles fully visible
-        if (currentIndex < maxIndex) {
-          currentIndex++;
-          moveCarousel();
-        }
-      });
-      prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-          currentIndex--;
-          moveCarousel();
-        }
-      });
-      
-      /* --------- Sequential Animation for Project Tiles --------- */
-      tiles.forEach((tile, index) => {
-        tile.style.animation = `panInLeft 0.8s forwards`;
-        tile.style.animationDelay = `${index * 0.2}s`;
-      });
-      
-      /* --------- Collapsible Sections in Writing Tile --------- */
-      const collapsibleSections = document.querySelectorAll('.collapsible-section');
-      // Start with all sections closed (none open by default)
-      collapsibleSections.forEach(section => {
-        section.classList.remove('open');
-        section.querySelector('.arrow-btn').textContent = '+';
-      });
-      let openSection = null; // No section open initially
-      collapsibleSections.forEach(section => {
-        section.querySelector('.collapsible-header').addEventListener('click', () => {
-          // If this section is not open, open it and close others.
-          if (!section.classList.contains('open')) {
-            // Close any currently open section.
-            if (openSection) {
-              openSection.classList.remove('open');
-              openSection.querySelector('.arrow-btn').textContent = '+';
-            }
-            section.classList.add('open');
-            section.querySelector('.arrow-btn').textContent = '−';
-            openSection = section;
-          }
-          // If section is already open, do nothing (to ensure at least one is open once one is selected).
-        });
-      });
-      
-      /* --------- Update Writing Emoji Based on Section Clicked --------- */
-      const writingEmojiDisplay = document.getElementById('writing-emoji-display');
-      const emojiMap = {
-        0: '📄',
-        1: '💬',
-        2: '💻',
-        3: '🧁'
-      };
-      collapsibleSections.forEach((section, idx) => {
-        section.addEventListener('click', () => {
-          writingEmojiDisplay.textContent = emojiMap[idx];
-        });
-      });
-      
-      /* --------- Sequential Animation for Collapsible Headers --------- */
-      const headers = document.querySelectorAll('.collapsible-header');
-      headers.forEach((header, idx) => {
-        header.style.animation = `panInLeft 0.8s forwards`;
-        header.style.animationDelay = `${idx * 0.2}s`;
-      });
-      
-      /* --------- Contact Section Panning Effect --------- */
-      const contactInner = document.querySelector('.contact-inner');
-      contactInner.style.animation = 'slideFromBottom 1s forwards';
-    </script>
   </body>
 </html>
