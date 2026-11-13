@@ -38,3 +38,17 @@
   height: 2.2rem;
   font-size: 1rem;
 }
+
+/* Compact project overview; preserve the original ocean/glass styling. */
+#portfolio { min-height: auto; padding-bottom: 5rem; scroll-margin-top: 7rem; }
+#portfolio .project-stage { position: relative !important; top: auto !important; margin-top: 1.5rem; }
+#portfolio .project-viewport { overflow: visible; padding: 0; }
+#portfolio .project-track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; padding: 0; gap: 1.4rem; transform: none; }
+#portfolio .project-card { width: 100%; height: auto; min-height: 0; margin: 0; padding: 1.25rem; grid-template-rows: auto auto 1fr; gap: 1rem; }
+#portfolio .project-screenshot { height: auto; aspect-ratio: 16 / 9; width: 100%; }
+#portfolio .project-card .tile-title { font-size: clamp(1.3rem, 1.8vw, 1.8rem); line-height: 1.15; margin: 0; }
+#portfolio .project-card .tile-description { font-size: .88rem; line-height: 1.55; margin: 0; }
+@media (max-width: 1000px) { #portfolio .project-track { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 580px) { #portfolio .project-track { grid-template-columns: minmax(0, 1fr); gap: 1rem; } #portfolio .project-card { padding: 1.1rem; } }
+/* A tall grid must not shift the section anchor during its entrance. */
+#portfolio { transform: none !important; }
