@@ -3,153 +3,193 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JANET B. – Portfolio & Research</title>
-    <script>
-      document.documentElement.classList.add("js");
-    </script>
+    <meta name="description" content="Janet B. — dentist, AI in healthcare researcher and builder. Explore projects in healthcare, anatomy, movement and everyday technology." />
+    <meta name="theme-color" content="#123d43" />
+    <title>JANET B. – Portfolio &amp; Research</title>
     <link rel="preload" href="fonts/bosch.otf" as="font" type="font/otf" crossorigin />
-    <link rel="preload" href="background_waves_clean.png" as="image" />
-    <link rel="stylesheet" href="css/style.css" />
-    <script defer src="js/gsap.min.js"></script>
-    <script defer src="js/ScrollTrigger.min.js"></script>
-    <script defer src="js/main.js"></script>
+    <link rel="stylesheet" href="css/style.css?v=20261113" />
+    <script defer src="js/main.js?v=20261113"></script>
   </head>
   <body>
-    <div class="preloader" aria-hidden="true">
-      <div class="preloader__mark">JANET B.</div>
-    </div>
-
-    <div class="scroll-progress" aria-hidden="true">
-      <div class="scroll-progress__bar"></div>
-    </div>
-
-    <div class="page-noise" aria-hidden="true"></div>
-    <div class="ocean-ambient" aria-hidden="true">
-      <span class="ambient-current ambient-current--one"></span>
-      <span class="ambient-current ambient-current--two"></span>
-      <span class="ambient-current ambient-current--three"></span>
-    </div>
-    <div class="dive-atmosphere" aria-hidden="true">
-      <div class="dive-atmosphere__layer dive-atmosphere__layer--surface"></div>
-      <div class="dive-atmosphere__layer dive-atmosphere__layer--midwater"></div>
-      <div class="dive-atmosphere__layer dive-atmosphere__layer--floor"></div>
-      <div class="dive-atmosphere__layer dive-atmosphere__layer--hadal"></div>
-      <span class="dive-particle dive-particle--one"></span>
-      <span class="dive-particle dive-particle--two"></span>
-      <span class="dive-particle dive-particle--three"></span>
-    </div>
-    <div class="dive-meter" aria-hidden="true">
-      <span class="dive-meter__phase" data-dive-phase>Surface</span>
-      <span class="dive-meter__line">
-        <span class="dive-meter__tick dive-meter__tick--surface">0 m</span>
-        <span class="dive-meter__tick dive-meter__tick--midwater">200 m</span>
-        <span class="dive-meter__tick dive-meter__tick--deep-midwater">1.000 m</span>
-        <span class="dive-meter__tick dive-meter__tick--abyss">4.000 m</span>
-        <span class="dive-meter__tick dive-meter__tick--hadal">6.000 m</span>
-        <span class="dive-meter__tick dive-meter__tick--deepest">10.935 m</span>
-        <span class="dive-meter__marker"></span>
-      </span>
-      <span class="dive-meter__depth" data-dive-depth>0 m</span>
-    </div>
-    <div class="custom-cursor" aria-hidden="true"></div>
-    <div class="custom-cursor custom-cursor--halo" aria-hidden="true"></div>
-
+    <a class="skip-link" href="#portfolio">Skip to projects</a>
     <header class="site-header">
       <nav class="site-nav" aria-label="Primary">
-        <div class="logo site-logo" aria-hidden="true">JANET B.</div>
+        <a class="site-logo" href="#intro" aria-label="Janet B. — home">JANET B.</a>
         <ul class="nav-links">
-          <li><a class="nav-link magnetic" href="#intro">Home</a></li>
-          <li><a class="nav-link magnetic" href="#portfolio">Projects</a></li>
-          <li><a class="nav-link magnetic" href="#writing">Writing</a></li>
-          <li><a class="nav-link magnetic" href="#contact">Contact</a></li>
+          <li><a class="nav-link" href="#intro" aria-current="location">Home</a></li>
+          <li><a class="nav-link" href="#portfolio">Projects</a></li>
+          <li><a class="nav-link" href="#writing">Writing</a></li>
+          <li><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
-        <span class="nav-indicator" aria-hidden="true"></span>
       </nav>
     </header>
-
-    <h1 class="main-heading hero-wordmark js-hero-title js-hero-wordmark" aria-label="JANET B.">
-      <svg class="hero-wordmark__svg" viewBox="0 0 1000 170" preserveAspectRatio="xMinYMid meet" aria-hidden="true" focusable="false">
-        <text class="hero-wordmark__text" x="0" y="128" textLength="1000" lengthAdjust="spacing">JANET B.</text>
-      </svg>
-    </h1>
-
     <main>
-      <section id="intro" class="section intro story-panel story-panel--intro" data-story-panel data-section="Home" data-dive-stage="surface" data-dive-label="Surface" data-dive-depth="0 m">
-        <div class="scene" aria-hidden="true">
-          <div class="light-field light-field--one"></div>
-          <div class="light-field light-field--two"></div>
-          <div class="caustic-field"></div>
-          <div class="water-surface"></div>
-        </div>
+      <section id="intro" class="intro" tabindex="-1" aria-labelledby="intro-heading">
         <div class="hero-content">
-          <p class="tagline js-hero-subtitle">Dentist | AI in healthcare researcher | Tech and AI enthusiast</p>
-          <div class="hero-accent-line" aria-hidden="true"></div>
+          <p class="eyebrow">At the intersection of care &amp; curiosity</p>
+          <h1 id="intro-heading">JANET B.</h1>
+          <p class="tagline">Dentist · AI in healthcare researcher<br />Tech and AI enthusiast</p>
+          <a class="hero-link" href="#portfolio">Explore my projects <span aria-hidden="true">↓</span></a>
         </div>
+        <p class="surface-note" aria-hidden="true">At the surface / 0 m</p>
       </section>
 
-      <section id="portfolio" class="section portfolio story-panel story-panel--portfolio" data-story-panel data-section="Projects" data-dive-stage="midwater" data-dive-label="Midwater" data-dive-depth="200-1.000 m" aria-labelledby="projects-heading">
-        <div class="section-kicker" aria-hidden="true"></div>
-        <h2 id="projects-heading" class="section-heading js-section-heading">PROJECTS</h2>
-        <div class="project-stage">
-          <div class="project-viewport">
-            <div class="carousel-track project-track">
-              <a href="https://finmedio.de/" target="_blank" rel="noreferrer" class="tile project-card">
-                <span class="tile-emoji" aria-hidden="true">🦷</span>
-                <h3 class="tile-title">Finmedio</h3>
-                <p class="tile-description">AI practice intelligence for automated billing and documentation. Winner at Hacknation's Global AI Hackathon, Venture Track and transatlantic AI pitch competition.</p>
-              </a>
-              <a href="https://jaw-atlas.vercel.app/" target="_blank" rel="noreferrer" class="tile project-card">
-                <span class="tile-emoji" aria-hidden="true">🦴</span>
-                <h3 class="tile-title">Jaw Atlas</h3>
-                <p class="tile-description">Interactive 3D facial anatomy for students, with selectable layers, structure information and practice quizzes. Explore in your browser or in VR.</p>
-              </a>
-              <a href="https://github.com/AmineChr54/Ai_for_global_healthcare_access" target="_blank" rel="noreferrer" class="tile project-card">
-                <span class="tile-emoji" aria-hidden="true">⚕️</span>
-                <h3 class="tile-title">OpenCare</h3>
-                <p class="tile-description">AI-powered platform mapping and analyzing global healthcare access</p>
-              </a>
-              <a href="https://anaesthesia.streamlit.app/" target="_blank" rel="noreferrer" class="tile project-card">
-                <span class="tile-emoji" aria-hidden="true">💉</span>
-                <h3 class="tile-title">Anaesthesia</h3>
-                <p class="tile-description">Streamlit-based web app identifying the right type of Articaine‑based anaesthesia by evaluating contraindications and calculating maximum dosage. <em>(App can be woken up again if it has gone to sleep!)</em></p>
-              </a>
-              <a href="https://github.com/darroush/Dental_AI_Articles_Parser" target="_blank" rel="noreferrer" class="tile project-card">
-                <span class="tile-emoji" aria-hidden="true">🤖</span>
-                <h3 class="tile-title">AI Research Article Parser</h3>
-                <p class="tile-description">Automates retrieval and summarization of research abstracts in AI for dentistry.</p>
-              </a>
-              <a href="https://visual-travel-planner.streamlit.app/" target="_blank" rel="noreferrer" class="tile project-card">
-                <span class="tile-emoji" aria-hidden="true">🗺️</span>
-                <h3 class="tile-title">Visual Travel Planner</h3>
-                <p class="tile-description">Streamlit-based web app that lets users select attractions, view them on a map, and generate a text-based multi-day itinerary, which can be downloaded as a PDF.</p>
-              </a>
-              <a href="https://g-n-games.itch.io/matcha-atelier" target="_blank" rel="noreferrer" class="tile project-card">
-                <span class="tile-emoji" aria-hidden="true">🍵</span>
-                <h3 class="tile-title">Matcha Atelier</h3>
-                <p class="tile-description">A cozy indie game centered on matcha-making, soft visuals, and a playful atelier atmosphere.</p>
-              </a>
-              <a href="https://en.wikipedia.org/wiki/Sensor" target="_blank" rel="noreferrer" class="tile project-card">
-                <span class="tile-emoji" aria-hidden="true">🕵️‍♀️</span>
-                <h3 class="tile-title">Stealth project</h3>
-                <p class="tile-description">Worked on a sensor hardware-software solution over the course of 2 hackathons and a 3-month venture program. Secured first place out of 40 + teams in one of the hackathons.</p>
-              </a>
-            </div>
+      <section id="portfolio" class="section portfolio" tabindex="-1" aria-labelledby="projects-heading">
+        <div class="section-topline"><p class="eyebrow">01 / Selected work</p><span class="section-coordinate" aria-hidden="true">Below the surface</span></div>
+        <div class="section-intro">
+          <h2 id="projects-heading">Projects</h2>
+          <p>From healthcare to everyday experiments.<br />A few things I have been building.</p>
+        </div>
+        <div class="project-grid">
+            <!-- PROJECT 01: edit the text, image and destination here. -->
+            <article class="project-card" id="project-finmedio" aria-labelledby="title-finmedio">
+              <figure class="project-media project-media--seafoam">
+                <a class="project-image-link" href="https://finmedio.de/" target="_blank" rel="noopener noreferrer" aria-label="Finmedio: Project website (opens in a new tab)">
+                  <img class="project-screen" src="images/projects/finmedio.webp" width="1600" height="866" alt="Finmedio prototype showing billing optimisation with demo data." loading="lazy" decoding="async" />
+                </a>
+                <figcaption>Prototype · demo data</figcaption>
+              </figure>
+              <div class="project-info">
+                <p class="project-category">Healthcare · AI</p>
+                <h3 id="title-finmedio">Finmedio</h3>
+                <p class="project-description">Practice intelligence for automated dental billing and documentation. Winner of the Hacknation Venture Track and the transatlantic AI pitch competition.</p>
+                <div class="project-footer">
+                  <a class="text-link" href="https://finmedio.de/" target="_blank" rel="noopener noreferrer">Project website <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+                  <span class="project-note">Access by invitation</span>
+                </div>
+              </div>
+            </article>
+            <!-- PROJECT 02: edit the text, image and destination here. -->
+            <article class="project-card" id="project-jaw-atlas" aria-labelledby="title-jaw-atlas">
+              <figure class="project-media project-media--mist">
+                <a class="project-image-link" href="https://jaw-atlas.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Jaw Atlas: Explore the app (opens in a new tab)">
+                  <img class="project-screen" src="images/projects/jaw-atlas.webp" width="1280" height="720" alt="Jaw Atlas showing an interactive 3D head with muscles, nerves and anatomy information." loading="lazy" decoding="async" />
+                </a>
+                <figcaption>Interactive anatomy explorer</figcaption>
+              </figure>
+              <div class="project-info">
+                <p class="project-category">Education · 3D &amp; VR</p>
+                <h3 id="title-jaw-atlas">Jaw Atlas</h3>
+                <p class="project-description">An interactive atlas of facial anatomy. Explore structures and layers, test your knowledge, and step into the experience in VR.</p>
+                <div class="project-footer">
+                  <a class="text-link" href="https://jaw-atlas.vercel.app/" target="_blank" rel="noopener noreferrer">Explore the app <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+                  <span class="project-note">Browser &amp; VR</span>
+                </div>
+              </div>
+            </article>
+            <!-- PROJECT 03: edit the text, image and destination here. -->
+            <article class="project-card" id="project-kettlecoach" aria-labelledby="title-kettlecoach">
+              <figure class="project-media project-media--sage">
+                <a class="project-image-link" href="https://github.com/grey-neutral/kettlebell-coach" target="_blank" rel="noopener noreferrer" aria-label="KettleCoach: View project &amp; demo (opens in a new tab)">
+                  <div class="project-phones">
+                  <img src="images/projects/kettlecoach-plan.webp" width="360" height="640" alt="KettleCoach training-plan setup with sport, goal, time and kettlebell weight." loading="lazy" decoding="async" />
+                  <img src="images/projects/kettlecoach-anatomy.webp" width="360" height="640" alt="KettleCoach goblet squat guidance with a 3D muscle model." loading="lazy" decoding="async" />
+                </div>
+                </a>
+                <figcaption>Training plan &amp; exercise guidance</figcaption>
+              </figure>
+              <div class="project-info">
+                <p class="project-category">Movement · Computer vision</p>
+                <h3 id="title-kettlecoach">KettleCoach</h3>
+                <p class="project-description">A kettlebell coaching prototype with tailored training plans, 3D exercise anatomy, camera-based rep counting and voice feedback.</p>
+                <div class="project-footer">
+                  <a class="text-link" href="https://github.com/grey-neutral/kettlebell-coach" target="_blank" rel="noopener noreferrer">View project &amp; demo <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+                  <span class="project-note">Prototype</span>
+                </div>
+              </div>
+            </article>
+            <!-- PROJECT 04: edit the text, image and destination here. -->
+            <article class="project-card" id="project-powerpoint-clicker" aria-labelledby="title-powerpoint-clicker">
+              <figure class="project-media project-media--sand">
+                <a class="project-image-link" href="https://x.com/dentist_dev/status/2115078534586646802" target="_blank" rel="noopener noreferrer" aria-label="PowerPoint Clicker: Watch the demo on X (opens in a new tab)">
+                  <img class="project-screen" src="images/projects/powerpoint-clicker.webp" width="1200" height="675" alt="The Bluetooth tracker from the PowerPoint Clicker project, shown in its packaging in the demo video." loading="lazy" decoding="async" />
+                </a>
+                <figcaption>From a giveaway tracker to a presentation tool</figcaption>
+              </figure>
+              <div class="project-info">
+                <p class="project-category">Hardware · macOS</p>
+                <h3 id="title-powerpoint-clicker">PowerPoint Clicker</h3>
+                <p class="project-description">A small hardware experiment: turning a Bluetooth tracker from a job fair into a PowerPoint clicker with a native macOS helper.</p>
+                <div class="project-footer">
+                  <a class="text-link" href="https://x.com/dentist_dev/status/2115078534586646802" target="_blank" rel="noopener noreferrer">Watch the demo on X <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+                  <span class="project-note">Hardware experiment</span>
+                </div>
+              </div>
+            </article>
+            <!-- PROJECT 05: edit the text, image and destination here. -->
+            <article class="project-card" id="project-anaesthesia" aria-labelledby="title-anaesthesia">
+              <figure class="project-media project-media--mist">
+                <a class="project-image-link" href="https://anaesthesia.streamlit.app/" target="_blank" rel="noopener noreferrer" aria-label="Anaesthesia: Open the prototype (opens in a new tab)">
+                  <img class="project-screen" src="images/projects/anaesthesia.webp" width="1280" height="720" alt="Articaine anaesthesia evaluator with a checklist of patient contraindications." loading="lazy" decoding="async" />
+                </a>
+                <figcaption>Articaine-based anaesthesia evaluator</figcaption>
+              </figure>
+              <div class="project-info">
+                <p class="project-category">Dentistry · Python</p>
+                <h3 id="title-anaesthesia">Anaesthesia</h3>
+                <p class="project-description">An educational prototype exploring Articaine contraindications and weight-based dosage calculations. For information only, not clinical use.</p>
+                <div class="project-footer">
+                  <a class="text-link" href="https://anaesthesia.streamlit.app/" target="_blank" rel="noopener noreferrer">Open the prototype <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+                  <span class="project-note">May need a moment to wake</span>
+                </div>
+              </div>
+            </article>
+            <!-- PROJECT 06: edit the text, image and destination here. -->
+            <article class="project-card" id="project-travel-planner" aria-labelledby="title-travel-planner">
+              <figure class="project-media project-media--seafoam">
+                <a class="project-image-link" href="https://visual-travel-planner.streamlit.app/" target="_blank" rel="noopener noreferrer" aria-label="Visual Travel Planner: Open the prototype (opens in a new tab)">
+                  <img class="project-screen" src="images/projects/travel-planner.webp" width="1280" height="720" alt="Visual Travel Planner with London attractions and trip settings." loading="lazy" decoding="async" />
+                </a>
+                <figcaption>A visual starting point for a London trip</figcaption>
+              </figure>
+              <div class="project-info">
+                <p class="project-category">Travel · Python</p>
+                <h3 id="title-travel-planner">Visual Travel Planner</h3>
+                <p class="project-description">Select places to explore, see them on a map and build a multi-day itinerary with a downloadable PDF. A playful proof of concept.</p>
+                <div class="project-footer">
+                  <a class="text-link" href="https://visual-travel-planner.streamlit.app/" target="_blank" rel="noopener noreferrer">Open the prototype <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+                  <span class="project-note">May need a moment to wake</span>
+                </div>
+              </div>
+            </article>
+        </div>
+
+        <div class="more-projects" aria-labelledby="more-projects-heading">
+          <h3 id="more-projects-heading">More explorations</h3>
+          <div class="project-index">
+            <article class="project-row">
+              <div><p class="project-category">Global health · AI</p><h4>OpenCare</h4></div>
+              <p>Mapping healthcare facilities and identifying gaps in access to care.</p>
+              <a class="text-link" href="https://github.com/AmineChr54/Ai_for_global_healthcare_access" target="_blank" rel="noopener noreferrer">View code <span aria-hidden="true">↗</span><span class="sr-only"> for OpenCare (opens in a new tab)</span></a>
+            </article>
+            <article class="project-row">
+              <div><p class="project-category">Research · Python</p><h4>AI Research Article Parser</h4></div>
+              <p>Retrieving and summarising research abstracts on AI in dentistry.</p>
+              <a class="text-link" href="https://github.com/darroush/Dental_AI_Articles_Parser" target="_blank" rel="noopener noreferrer">View code <span aria-hidden="true">↗</span><span class="sr-only"> for AI Research Article Parser (opens in a new tab)</span></a>
+            </article>
+            <article class="project-row">
+              <div><p class="project-category">Play · Indie game</p><h4>Matcha Atelier</h4></div>
+              <p>A cozy game about making matcha, with soft visuals and a playful atelier atmosphere.</p>
+              <a class="text-link" href="https://g-n-games.itch.io/matcha-atelier" target="_blank" rel="noopener noreferrer">View game <span aria-hidden="true">↗</span><span class="sr-only"> Matcha Atelier (opens in a new tab)</span></a>
+            </article>
+            <article class="project-row">
+              <div><p class="project-category">Hardware · Venture building</p><h4>Stealth project</h4></div>
+              <p>A sensor hardware–software solution developed across two hackathons and a three-month venture programme. First place among more than 40 teams.</p>
+              <span class="project-note">Private project</span>
+            </article>
           </div>
         </div>
       </section>
 
-      <section id="writing" class="section writing" data-section="Writing" data-dive-stage="floor" data-dive-label="Abyssal archive" data-dive-depth="4.000-6.000 m" aria-labelledby="writing-heading">
+      <section id="writing" class="section writing" tabindex="-1" data-section="Writing" data-dive-stage="floor" data-dive-label="Abyssal archive" data-dive-depth="4.000-6.000 m" aria-labelledby="writing-heading">
         <div class="archive-shell">
           <div class="archive-rail">
-            <h2 id="writing-heading" class="section-heading js-section-heading">RESEARCH AND WRITING</h2>
-            <div class="writing-emoji archive-emblem" aria-hidden="true">
-              <span id="writing-emoji-display">📄</span>
-            </div>
+            <p class="eyebrow">02 / Ideas &amp; evidence</p>
+            <h2 id="writing-heading" class="section-heading js-section-heading">Research &amp; writing</h2>
           </div>
           <div class="writing-tile archive-list">
             <section class="collapsible-section archive-group" data-index="0">
               <div class="collapsible-header archive-header">
-                <span class="arrow-btn" aria-hidden="true">+</span>
                 <h3 class="header-text">Publications on AI in healthcare</h3>
               </div>
               <div class="collapsible-content archive-content">
@@ -166,7 +206,6 @@
 
             <section class="collapsible-section archive-group" data-index="1">
               <div class="collapsible-header archive-header">
-                <span class="arrow-btn" aria-hidden="true">+</span>
                 <h3 class="header-text">Presentations</h3>
               </div>
               <div class="collapsible-content archive-content">
@@ -186,7 +225,6 @@
 
             <section class="collapsible-section archive-group" data-index="2">
               <div class="collapsible-header archive-header">
-                <span class="arrow-btn" aria-hidden="true">+</span>
                 <h3 class="header-text">Blog posts on AI</h3>
               </div>
               <div class="collapsible-content archive-content">
@@ -202,7 +240,6 @@
 
             <section class="collapsible-section archive-group" data-index="3">
               <div class="collapsible-header archive-header">
-                <span class="arrow-btn" aria-hidden="true">+</span>
                 <h3 class="header-text">Book</h3>
               </div>
               <div class="collapsible-content archive-content">
@@ -215,17 +252,17 @@
         </div>
       </section>
     </main>
-
-    <footer id="contact" class="section contact" data-section="Contact" data-dive-stage="hadal" data-dive-label="Challenger Deep" data-dive-depth="6.000-10.935 m">
-      <div class="footer-wordmark" aria-hidden="true">JANET B.</div>
+    <footer id="contact" class="section contact" tabindex="-1" aria-labelledby="contact-heading">
+      <p class="eyebrow">03 / Keep in touch</p>
       <div class="contact-inner">
-        <h2>Contact</h2>
+        <h2 id="contact-heading">Contact</h2>
         <div class="contact-links">
-          <a class="magnetic" href="https://www.linkedin.com/in/dr-janet-brinz/" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a class="magnetic" href="https://github.com/grey-neutral" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="magnetic" href="mailto:thehumanproject.ai@gmail.com?subject=Inquiry" target="_blank">Email</a>
+          <a class="text-link" href="https://www.linkedin.com/in/dr-janet-brinz/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="text-link" href="https://github.com/grey-neutral" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="text-link" href="mailto:thehumanproject.ai@gmail.com?subject=Inquiry">Email <span aria-hidden="true">↗</span></a>
         </div>
       </div>
+      <div class="footer-bottom"><span class="footer-signature">JANET B.</span><a href="#intro">Back to the surface <span aria-hidden="true">↑</span></a></div>
     </footer>
   </body>
 </html>
