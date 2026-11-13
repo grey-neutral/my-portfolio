@@ -1,0 +1,40 @@
+/* Only the new images inside the original scrolling project cards. */
+.project-card--illustrated {
+  grid-template-rows: minmax(4rem, 1fr) auto auto;
+}
+
+.project-screenshot {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+.project-screenshot > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  object-fit: contain;
+  border-radius: 7px;
+}
+
+.project-screenshot--pair > img {
+  width: calc((100% - 0.65rem) / 2);
+}
+
+/* Keep the original project emblems, now above the image corner. */
+.project-screenshot .tile-emoji {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 1rem;
+}
