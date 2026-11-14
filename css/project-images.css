@@ -52,3 +52,30 @@
 @media (max-width: 580px) { #portfolio .project-track { grid-template-columns: minmax(0, 1fr); gap: 1rem; } #portfolio .project-card { padding: 1.1rem; } }
 /* A tall grid must not shift the section anchor during its entrance. */
 #portfolio { transform: none !important; }
+
+/* KettleCoach: a quiet preview, with an optional, user-controlled product tour. */
+.kettlecoach-open { border: 0; padding: 0; background: #d5e4df; cursor: pointer; font: inherit; }
+.gallery-preview-label { position: absolute; bottom: .6rem; right: .6rem; padding: .45rem .65rem; border-radius: 5px; background: #153d42; color: #fffdf6; font-size: .72rem; }
+.kettlecoach-card .tile-title a { color: inherit; text-decoration: none; }
+.project-gallery { width: min(820px, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); box-sizing: border-box; padding: 1.5rem; border: 1px solid #9dbbb7; border-radius: 12px; background: #f4f6ef; color: #153d42; overflow: auto; }
+.project-gallery::backdrop { background: rgba(8, 35, 40, .78); backdrop-filter: blur(5px); }
+.gallery-header { display: flex; align-items: start; justify-content: space-between; gap: 1rem; margin-bottom: 1.2rem; }
+.gallery-header h2 { font-family: var(--font-display); font-weight: 400; margin: .2rem 0 0; font-size: 1.8rem; }
+.gallery-eyebrow { font-size: .75rem; margin: 0; }
+.gallery-close { background: transparent; border: 1px solid #9dbbb7; border-radius: 50%; width: 44px; height: 44px; flex-shrink: 0; cursor: pointer; color: inherit; }
+.gallery-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+.gallery-video { display: block; width: 100%; max-height: 65dvh; aspect-ratio: 9 / 16; object-fit: contain; background: #08090b; border-radius: 8px; }
+.gallery-choices { display: grid; gap: .6rem; }
+.gallery-choices button { padding: .8rem; min-height: 44px; text-align: left; font: inherit; font-size: .9rem; color: #153d42; border: 1px solid #9dbbb7; border-radius: 6px; background: transparent; cursor: pointer; }
+.gallery-choices button[aria-pressed="true"] { background: #153d42; color: #fffdf6; }
+.gallery-caption { font-size: .9rem; line-height: 1.6; margin: 1.2rem 0; }
+.gallery-details a { color: #153d42; text-decoration: underline; }
+.kettlecoach-open:focus-visible, .project-gallery button:focus-visible { outline: 3px solid #af642f; outline-offset: 3px; }
+body.gallery-is-open { overflow: hidden; }
+@media (max-width: 580px) {
+  .project-gallery { padding: 1rem; }
+  .gallery-layout { grid-template-columns: 1fr; gap: 1rem; }
+  .gallery-video { max-height: 45dvh; }
+  .gallery-choices { grid-template-columns: 1fr 1fr; gap: .4rem; }
+  .gallery-choices button { font-size: .78rem; padding: .6rem; }
+}

@@ -9,11 +9,11 @@
     </script>
     <link rel="preload" href="fonts/bosch.otf" as="font" type="font/otf" crossorigin />
     <link rel="preload" href="background_waves_clean.png" as="image" />
-    <link rel="stylesheet" href="css/style.css?v=20261113-compact-grid" />
-    <link rel="stylesheet" href="css/project-images.css?v=20261113-compact-grid" />
+    <link rel="stylesheet" href="css/style.css?v=20261114-kettlecoach-gallery" />
+    <link rel="stylesheet" href="css/project-images.css?v=20261114-kettlecoach-gallery" />
     <script defer src="js/gsap.min.js"></script>
     <script defer src="js/ScrollTrigger.min.js"></script>
-    <script defer src="js/main.js?v=20261113-compact-grid"></script>
+    <script defer src="js/main.js?v=20261114-kettlecoach-gallery"></script>
   </head>
   <body>
     <div class="preloader" aria-hidden="true">
@@ -118,15 +118,14 @@
                 <h3 class="tile-title">Jaw Atlas</h3>
                 <p class="tile-description">Interactive 3D facial anatomy for students, with selectable layers, structure information and practice quizzes. Explore in your browser or in VR.</p>
               </a>
-              <a href="https://github.com/grey-neutral/kettlebell-coach" target="_blank" rel="noreferrer" class="tile project-card project-card--illustrated">
-                <span class="project-screenshot project-screenshot--pair">
-                  <img src="images/projects/kettlecoach-plan.webp" width="360" height="640" alt="KettleCoach training plan setup." loading="lazy" decoding="async" />
-                  <img src="images/projects/kettlecoach-anatomy.webp" width="360" height="640" alt="KettleCoach exercise guidance and muscle anatomy." loading="lazy" decoding="async" />
-                  <span class="tile-emoji" aria-hidden="true">🏋️</span>
-                </span>
-                <h3 class="tile-title">KettleCoach</h3>
-                <p class="tile-description">A kettlebell coaching prototype with tailored training plans, 3D exercise anatomy, camera-based rep counting and voice feedback. Winner project at the Titanium Hackathon.</p>
-              </a>
+              <article class="tile project-card project-card--illustrated kettlecoach-card">
+                <button type="button" class="project-screenshot kettlecoach-open" aria-label="Explore KettleCoach screenshots and demos" aria-haspopup="dialog">
+                  <img src="images/projects/kettlecoach-anatomy.webp" width="360" height="640" alt="KettleCoach interactive 3D muscle anatomy for the goblet squat." loading="lazy" decoding="async" />
+                  <span class="gallery-preview-label">Explore 4 views ↗</span>
+                </button>
+                <h3 class="tile-title"><a href="https://github.com/grey-neutral/kettlebell-coach" target="_blank" rel="noreferrer">KettleCoach</a></h3>
+                <p class="tile-description">A kettlebell coaching prototype with tailored training plans, interactive 3D anatomy, camera-based rep counting and voice feedback, plus a preview of four coach personas. Winner project at the Titanium Hackathon.</p>
+              </article>
               <a href="https://x.com/dentist_dev/status/2115078534586646802" target="_blank" rel="noreferrer" class="tile project-card project-card--illustrated">
                 <span class="project-screenshot">
                   <img src="images/projects/powerpoint-clicker-demo.webp" width="1280" height="720" alt="PowerPoint Clicker in use: a Bluetooth tracker controlling slides on a laptop." loading="lazy" decoding="async" />
@@ -317,6 +316,26 @@
         </div>
       </section>
     </main>
+
+    <dialog id="kettlecoach-gallery" class="project-gallery" aria-labelledby="kettlecoach-gallery-title">
+      <header class="gallery-header">
+        <div><p class="gallery-eyebrow">KettleCoach · Product tour</p><h2 id="kettlecoach-gallery-title">Inside the coach</h2></div>
+        <button type="button" class="gallery-close" aria-label="Close KettleCoach gallery">✕</button>
+      </header>
+      <div class="gallery-layout">
+        <video class="gallery-video" controls playsinline muted preload="metadata" poster="images/projects/kettlecoach-anatomy.webp" aria-label="KettleCoach 3D anatomy demo" src="images/projects/kettlecoach/exercise-guidance.mp4"></video>
+        <div class="gallery-details">
+          <div class="gallery-choices" role="group" aria-label="Choose a KettleCoach view">
+            <button type="button" data-demo="exercise-guidance" aria-pressed="true">01 · 3D anatomy</button>
+            <button type="button" data-demo="live-coaching" aria-pressed="false">02 · Live camera coach</button>
+            <button type="button" data-demo="coach-selection" aria-pressed="false">03 · Coach personas</button>
+            <button type="button" data-demo="training-plan" aria-pressed="false">04 · Training plan</button>
+          </div>
+          <p class="gallery-caption" aria-live="polite">Rotate the 3D body and explore the muscles involved in each exercise. Play the demo to see the interaction.</p>
+          <a href="https://github.com/grey-neutral/kettlebell-coach" target="_blank" rel="noreferrer">View project on GitHub ↗</a>
+        </div>
+      </div>
+    </dialog>
 
     <footer id="contact" class="section contact" data-section="Contact" data-dive-stage="hadal" data-dive-label="Challenger Deep" data-dive-depth="6.000-10.935 m">
       <div class="footer-wordmark" aria-hidden="true">JANET B.</div>

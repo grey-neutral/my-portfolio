@@ -19,6 +19,7 @@
     initLayeredStory(gsapReady);
     initProjectShowcase(gsapReady);
     initResearchArchive(gsapReady);
+    initKettleCoachGallery();
     if (enableDecorativeScrollEffects) {
       initOceanMotion(gsapReady);
       initPanelReflex();
@@ -31,6 +32,48 @@
       window.ScrollTrigger.refresh();
     }
   });
+
+  function initKettleCoachGallery() {
+    const dialog = document.getElementById("kettlecoach-gallery");
+    const opener = document.querySelector(".kettlecoach-open");
+    if (!dialog || !opener) return;
+    const video = dialog.querySelector("video");
+    const caption = dialog.querySelector(".gallery-caption");
+    const descriptions = {
+      "exercise-guidance": "Rotate the 3D body and explore the muscles involved in each exercise. Play the demo to see the interaction.",
+      "live-coaching": "The live camera view supports pose detection, rep counting and form guidance, with optional voice feedback. Play this recorded demo to see the camera interface.",
+      "coach-selection": "Choose between Drill Sergeant, Technical Coach, Performance Coach and Recovery Coach. Persona selection is a UI preview; distinct voices and coaching styles are not yet implemented.",
+      "training-plan": "Configure your sport, goal, experience, workout duration and kettlebell weight to create a tailored training plan."
+    };
+    opener.addEventListener("click", () => {
+      dialog.showModal();
+      document.body.classList.add("gallery-is-open");
+    });
+    dialog.querySelector(".gallery-close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target !== dialog) return;
+      const bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+    });
+    dialog.addEventListener("close", () => {
+      video.pause();
+      document.body.classList.remove("gallery-is-open");
+      opener.focus({ preventScroll: true });
+    });
+    dialog.querySelectorAll("[data-demo]").forEach((button) => {
+      button.addEventListener("click", () => {
+        video.pause();
+        const demo = button.dataset.demo;
+        video.removeAttribute("poster");
+        if (demo === "exercise-guidance") video.poster = "images/projects/kettlecoach-anatomy.webp";
+        video.src = `images/projects/kettlecoach/${demo}.mp4`;
+        video.setAttribute("aria-label", `KettleCoach ${button.textContent.slice(5)} demo`);
+        video.load();
+        caption.textContent = descriptions[demo];
+        dialog.querySelectorAll("[data-demo]").forEach((choice) => choice.setAttribute("aria-pressed", String(choice === button)));
+      });
+    });
+  }
 
   function handleReducedMotion() {
     reducedMotion = motionQuery.matches;
